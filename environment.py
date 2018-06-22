@@ -18,7 +18,6 @@ ITEM_TYPE = 'tweet'
 # LIMIT = None
 LIMIT = 1000
 
-
 ############ Whether to log
 # Log the id of each user or tweet as they pass through each
 # stage of processing. This is used for ensuring accuracy.
@@ -30,48 +29,51 @@ SLACK_NOTIFY = False
 # at what point to send an update to slack
 SLACK_HEARTBEAT_LIMIT = 1000000
 
-############## Locations of code
+############################## Locations of code ###############
 ROOT = os.getenv( "HOME" )
 BASE = '%s/Dropbox/TwitterProject' % ROOT
 
 # Project folder paths
 PROJ_BASE = "%s/TwitterProject" % BASE
-COMMON_TOOLS_PATH = "%s/CommonTools" % PROJ_BASE
-TEXT_TOOLS_PATH = "%s/TextTools" % PROJ_BASE
-TWITTER_MINING_PATH = "%s/TwitterMining" % PROJ_BASE
-SERVER_PATH = "%s/TwitterDatabaseServer" % PROJ_BASE
 ANALYSIS_PATH = "%s/TwitterDataAnalysis" % PROJ_BASE
+COMMON_TOOLS_PATH = "%s/CommonTools" % PROJ_BASE
+SERVER_PATH = "%s/TwitterDatabaseServer" % PROJ_BASE
+TEXT_TOOLS_PATH = "%s/TextTools" % PROJ_BASE
+MINING_PATH = "%s/TwitterMining" % PROJ_BASE
 
-# Data and experiments
-EXPERIMENTS_FOLDER = BASE + '/Experiments'
-MAPPING_PATH = "%s/TwitterDataAnalysis/mappings" % PROJ_BASE
+# add everyone to path explicitly
+sys.path.append( PROJ_BASE )
+sys.path.append( ANALYSIS_PATH )
+sys.path.append(COMMON_TOOLS_PATH)
+sys.path.append(SERVER_PATH )
+sys.path.append( TEXT_TOOLS_PATH )
+sys.path.append( MINING_PATH )
 
 
 # Credentials
 CREDENTIAL_FILE = '%s/private_credentials/sql_local_credentials.xml' % BASE
 SLACK_CREDENTIAL_FILE = "%s/private_credentials/slack-credentials.xml" % BASE
 
+# Data and experiments
+EXPERIMENTS_FOLDER = BASE + '/Experiments'
+MAPPING_PATH = "%s/TwitterDataAnalysis/mappings" % PROJ_BASE
 
 # Logging folder paths
 LOG_FOLDER_PATH = "%s/Desktop/TwitterDataAnalysisLogs" % ROOT
 PROFILING_LOG_FOLDER_PATH = "%s/profiling" % LOG_FOLDER_PATH
 INTEGRITY_LOG_FOLDER_PATH = "%s/integrity" % LOG_FOLDER_PATH
 
-# add everyone to path explicitly
-sys.path.append(COMMON_TOOLS_PATH)
-sys.path.append( PROJ_BASE )
-sys.path.append( TEXT_TOOLS_PATH )
 
-sys.path.append( "%s/DataTools" % PROJ_BASE )
-sys.path.append( "%s/Executables" % PROJ_BASE )
-sys.path.append( "%s/Loggers" % PROJ_BASE )
-sys.path.append( '%s/TextTools/TextProcessors' % BASE )
-sys.path.append( "%s/ProcessingTools" % PROJ_BASE )
-sys.path.append( "%s/profiling" % PROJ_BASE )
-sys.path.append( '%s/Servers' % BASE )
-
-# the directory that contains various common custom classes
-sys.path.append( '%s/Dropbox/iPythonFiles/BaseClasses' % ROOT )
+# sys.path.append( "%s/DataTools" % PROJ_BASE )
+# sys.path.append( "%s/Executables" % PROJ_BASE )
+# sys.path.append( "%s/Loggers" % PROJ_BASE )
+# sys.path.append( '%s/TextTools/TextProcessors' % BASE )
+# sys.path.append( "%s/ProcessingTools" % PROJ_BASE )
+# sys.path.append( "%s/profiling" % PROJ_BASE )
+# sys.path.append( '%s/Servers' % BASE )
+#
+# # the directory that contains various common custom classes
+# sys.path.append( '%s/Dropbox/iPythonFiles/BaseClasses' % ROOT )
 
 ############################## Queues ###############################
 # How many transactions to queue before
