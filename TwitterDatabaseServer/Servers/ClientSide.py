@@ -1,7 +1,7 @@
 """
 Created by adam on 3/27/18
 """
-from Servers import ResponseStoreMixin
+from TwitterDatabaseServer.Servers.Mixins import ResponseStoreMixin
 __author__ = 'adam'
 
 from tornado import gen
@@ -11,7 +11,7 @@ from tornado.log import gen_log
 from tornado.simple_httpclient import SimpleAsyncHTTPClient
 from ProcessingTools.Mixins import ProcessIdHaver
 import environment
-from Servers import Helpers
+from TwitterDatabaseServer.Servers import Helpers
 
 # instrumenting to determine if running async
 from Profiling.OptimizingTools import timestamp_writer, timestamped_count_writer

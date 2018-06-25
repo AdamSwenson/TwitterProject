@@ -7,16 +7,16 @@ if __name__ == '__main__':
     from distutils.core import setup
 
 setup(
-    name='TwitterDataAnalysis',
+    name='TwitterDataProject',
     version='0.1.0',
     author='adm',
-    author_email='jrh@example.com',
+    author_email='adam.swenson@csun.eduj',
     packages=[],
     scripts=[],
     url='',
     license='LICENSE.txt',
     description='',
-    long_description=open('README.txt').read(),
+    long_description=open('README.md').read(),
     install_requires=[
         "ConfigParser",
         "dawg",
@@ -28,6 +28,6 @@ setup(
         "nltk",
         "progress",
         "sqlalchemy",
-        "tornado", 'requests'
+        "tornado", 'requests', 'aiounittest'
     ],
 )

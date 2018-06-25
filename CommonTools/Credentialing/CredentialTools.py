@@ -7,7 +7,7 @@ __author__ = 'adam'
 import xml.etree.ElementTree as ET
 
 
-class Credentials( object ):
+class CredentialLoader( object ):
 
     def __init__( self, credentials_file ):
         self.credentials = ET.parse( credentials_file )

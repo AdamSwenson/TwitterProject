@@ -2,7 +2,7 @@
 Created by adam on 3/27/18
 """
 from DataTools.DataStructures import make_tweet_result, make_user_result
-from Servers import BadPayloadException
+from TwitterDatabaseServer.Servers.Errors import BadPayloadException
 
 __author__ = 'adam'
 

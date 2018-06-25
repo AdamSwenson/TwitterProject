@@ -31,7 +31,7 @@ SLACK_HEARTBEAT_LIMIT = 1000000
 
 ############################## Locations of code ###############
 ROOT = os.getenv( "HOME" )
-BASE = '%s/Dropbox/TwitterProject' % ROOT
+BASE = '%s/Dropbox/PainNarrativesLab' % ROOT
 
 # Project folder paths
 PROJ_BASE = "%s/TwitterProject" % BASE
@@ -40,6 +40,7 @@ COMMON_TOOLS_PATH = "%s/CommonTools" % PROJ_BASE
 SERVER_PATH = "%s/TwitterDatabaseServer" % PROJ_BASE
 TEXT_TOOLS_PATH = "%s/TextTools" % PROJ_BASE
 MINING_PATH = "%s/TwitterMining" % PROJ_BASE
+UNIT_TESTS_PATH = "%s/tests" % PROJ_BASE
 
 # add everyone to path explicitly
 sys.path.append( PROJ_BASE )
@@ -50,7 +51,7 @@ sys.path.append( TEXT_TOOLS_PATH )
 sys.path.append( MINING_PATH )
 
 
-# Credentials
+# CredentialLoader
 CREDENTIAL_FILE = '%s/private_credentials/sql_local_credentials.xml' % BASE
 SLACK_CREDENTIAL_FILE = "%s/private_credentials/slack-credentials.xml" % BASE
 
@@ -146,3 +147,8 @@ QUERY_TIME_LOG = '%s/QUERY_TIME_LOG.csv' % LOG_FOLDER_PATH
 # semi-permanent log of how long it takes to run user processing
 # this gets written to regardless of whether TIME_LOGGING is True
 RUN_TIME_LOG = '%s/%s-processing-run-time-log.csv' % (LOG_FOLDER_PATH, ITEM_TYPE)
+
+
+
+################################### Testing ###########################
+TEST_CREDENTIALS_FILE = '%s/tests/helpers/sql_test_credentials.xml' % PROJ_BASE

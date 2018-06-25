@@ -43,7 +43,7 @@ EXPERIMENTS_FOLDER = BASE + '/Experiments'
 MAPPING_PATH = "%s/TwitterDataAnalysis/mappings" % BASE
 
 
-# Credentials
+# CredentialLoader
 CREDENTIAL_FILE = '%s/private_credentials/sql_local_credentials.xml' % BASE
 SLACK_CREDENTIAL_FILE = "%s/private_credentials/slack-credentials.xml" % BASE
 

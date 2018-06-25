@@ -8,8 +8,8 @@ __author__ = 'adam'
 from functools import wraps
 import time
 
-from CommonTools.Loggers import log_query, log_query_timestamp, log_request, log_request_timestamp
-from CommonTools import Loggers as Slack
+from CommonTools.Loggers.CsvLoggers import log_query, log_query_timestamp, log_request, log_request_timestamp
+from CommonTools.Loggers import SlackNotifications as Slack
 
 
 def standard_timestamp():

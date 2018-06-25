@@ -1,0 +1,271 @@
+
+ Getting older tweets 
+ starting from tweet 1234567890
+ Getting newer tweets 
+ starting from tweet 1234567890
+    Retrieved 98 tweets for search on cattoy
+    Retrieved 98 tweets for search on cattoy
+ start resting: 2018-06-21 18:49:04.679437 
+ --------------------------------- 2018-06-21 18:49:04.681151 --------------------------- 
+ Run number: 45 
+ Searching for catfood 
+ Getting older tweets 
+ starting from tweet 1234567890
+ Getting newer tweets 
+ starting from tweet 1234567890
+    Retrieved 98 tweets for search on cattoy
+    Retrieved 98 tweets for search on cattoy
+ start resting: 2018-06-21 18:53:14.044685 
+ --------------------------------- 2018-06-21 18:53:14.045757 --------------------------- 
+ Run number: 45 
+ Searching for catfood 
+ Getting older tweets 
+ starting from tweet 1234567890
+ Getting newer tweets 
+ starting from tweet 1234567890
+    Retrieved 98 tweets for search on cattoy
+    Retrieved 98 tweets for search on cattoy
+ start resting: 2018-06-21 18:53:53.393184 
+ --------------------------------- 2018-06-21 18:53:53.394354 --------------------------- 
+ Run number: 45 
+ Searching for catfood 
+ Getting older tweets 
+ starting from tweet 1234567890
+ Getting newer tweets 
+ starting from tweet 1234567890
+    Retrieved 98 tweets for search on cattoy
+    Retrieved 98 tweets for search on cattoy
+ start resting: 2018-06-22 15:31:15.212719 
+ --------------------------------- 2018-06-22 15:31:15.213800 --------------------------- 
+ Run number: 45 
+ Searching for catfood 
+ Getting older tweets 
+ starting from tweet 1234567890
+ Getting newer tweets 
+ starting from tweet 1234567890
+    Retrieved 98 tweets for search on cattoy
+    Retrieved 98 tweets for search on cattoy
+ start resting: 2018-06-22 15:40:06.456898 
+ --------------------------------- 2018-06-22 15:40:06.457862 --------------------------- 
+ Run number: 45 
+ Searching for catfood 
+ Getting older tweets 
+ starting from tweet 1234567890
+ Getting newer tweets 
+ starting from tweet 1234567890
+    Retrieved 98 tweets for search on cattoy
+    Retrieved 98 tweets for search on cattoy
+ start resting: 2018-06-22 15:40:56.920212 
+ --------------------------------- 2018-06-22 15:40:56.921326 --------------------------- 
+ Run number: 45 
+ Searching for catfood 
+ Getting older tweets 
+ starting from tweet 1234567890
+ Getting newer tweets 
+ starting from tweet 1234567890
+    Retrieved 98 tweets for search on cattoy
+    Retrieved 98 tweets for search on cattoy
+ start resting: 2018-06-22 15:41:39.771891 
+ --------------------------------- 2018-06-22 15:41:39.772953 --------------------------- 
+ Run number: 45 
+ Searching for catfood 
+ Getting older tweets 
+ starting from tweet 1234567890
+ Getting newer tweets 
+ starting from tweet 1234567890
+    Retrieved 98 tweets for search on cattoy
+    Retrieved 98 tweets for search on cattoy
+ start resting: 2018-06-22 15:42:54.194282 
+ --------------------------------- 2018-06-22 15:42:54.195436 --------------------------- 
+ Run number: 45 
+ Searching for catfood 
+ Getting older tweets 
+ starting from tweet 1234567890
+ Getting newer tweets 
+ starting from tweet 1234567890
+    Retrieved 98 tweets for search on cattoy
+    Retrieved 98 tweets for search on cattoy
+ start resting: 2018-06-22 15:43:20.349527 
+ --------------------------------- 2018-06-22 15:43:20.350640 --------------------------- 
+ Run number: 45 
+ Searching for catfood 
+ Getting older tweets 
+ starting from tweet 1234567890
+ Getting newer tweets 
+ starting from tweet 1234567890
+    Retrieved 98 tweets for search on cattoy
+    Retrieved 98 tweets for search on cattoy
+ start resting: 2018-06-22 15:43:36.260269 
+ --------------------------------- 2018-06-22 15:43:36.261346 --------------------------- 
+ Run number: 45 
+ Searching for catfood 
+ Getting older tweets 
+ starting from tweet 1234567890
+ Getting newer tweets 
+ starting from tweet 1234567890
+    Retrieved 98 tweets for search on cattoy
+    Retrieved 98 tweets for search on cattoy
+ start resting: 2018-06-22 15:44:04.113973 
+ --------------------------------- 2018-06-22 15:44:04.114978 --------------------------- 
+ Run number: 45 
+ Searching for catfood 
+ Getting older tweets 
+ starting from tweet 1234567890
+ Getting newer tweets 
+ starting from tweet 1234567890
+    Retrieved 98 tweets for search on cattoy
+    Retrieved 98 tweets for search on cattoy
+ start resting: 2018-06-22 15:44:35.265677 
+ --------------------------------- 2018-06-22 15:44:35.266745 --------------------------- 
+ Run number: 45 
+ Searching for catfood 
+ Getting older tweets 
+ starting from tweet 1234567890
+ Getting newer tweets 
+ starting from tweet 1234567890
+    Retrieved 98 tweets for search on cattoy
+    Retrieved 98 tweets for search on cattoy
+ start resting: 2018-06-22 15:46:14.099598 
+ --------------------------------- 2018-06-22 15:46:14.100614 --------------------------- 
+ Run number: 45 
+ Searching for catfood 
+ Getting older tweets 
+ starting from tweet 1234567890
+ Getting newer tweets 
+ starting from tweet 1234567890
+    Retrieved 98 tweets for search on cattoy
+    Retrieved 98 tweets for search on cattoy
+ start resting: 2018-06-22 15:47:18.604379 
+ --------------------------------- 2018-06-22 15:47:18.605475 --------------------------- 
+ Run number: 45 
+ Searching for catfood 
+ Getting older tweets 
+ starting from tweet 1234567890
+ Getting newer tweets 
+ starting from tweet 1234567890
+    Retrieved 98 tweets for search on cattoy
+    Retrieved 98 tweets for search on cattoy
+ start resting: 2018-06-22 15:47:40.268131 
+ --------------------------------- 2018-06-22 15:47:40.269202 --------------------------- 
+ Run number: 45 
+ Searching for catfood 
+ Getting older tweets 
+ starting from tweet 1234567890
+ Getting newer tweets 
+ starting from tweet 1234567890
+    Retrieved 98 tweets for search on cattoy
+    Retrieved 98 tweets for search on cattoy
+ start resting: 2018-06-22 16:29:50.270277 
+ --------------------------------- 2018-06-22 16:29:50.271250 --------------------------- 
+ Run number: 45 
+ Searching for catfood 
+ Getting older tweets 
+ starting from tweet 1234567890
+ Getting newer tweets 
+ starting from tweet 1234567890
+    Retrieved 98 tweets for search on cattoy
+    Retrieved 98 tweets for search on cattoy
+ start resting: 2018-06-22 16:43:29.261068 
+ --------------------------------- 2018-06-22 16:43:29.262278 --------------------------- 
+ Run number: 45 
+ Searching for catfood 
+ Getting older tweets 
+ starting from tweet 1234567890
+ Getting newer tweets 
+ starting from tweet 1234567890
+    Retrieved 98 tweets for search on cattoy
+    Retrieved 98 tweets for search on cattoy
+ start resting: 2018-06-22 16:44:16.841284 
+ --------------------------------- 2018-06-22 16:44:16.842573 --------------------------- 
+ Run number: 45 
+ Searching for catfood 
+ Getting older tweets 
+ starting from tweet 1234567890
+ Getting newer tweets 
+ starting from tweet 1234567890
+    Retrieved 98 tweets for search on cattoy
+    Retrieved 98 tweets for search on cattoy
+ start resting: 2018-06-22 16:47:51.917467 
+ --------------------------------- 2018-06-22 16:47:51.918552 --------------------------- 
+ Run number: 45 
+ Searching for catfood 
+ Getting older tweets 
+ starting from tweet 1234567890
+ Getting newer tweets 
+ starting from tweet 1234567890
+    Retrieved 98 tweets for search on cattoy
+    Retrieved 98 tweets for search on cattoy
+ start resting: 2018-06-22 16:52:00.158003 
+ --------------------------------- 2018-06-22 16:52:00.159441 --------------------------- 
+ Run number: 45 
+ Searching for catfood 
+ Getting older tweets 
+ starting from tweet 1234567890
+ Getting newer tweets 
+ starting from tweet 1234567890
+    Retrieved 98 tweets for search on cattoy
+    Retrieved 98 tweets for search on cattoy
+ start resting: 2018-06-22 16:56:52.562427 
+ --------------------------------- 2018-06-22 16:56:52.563432 --------------------------- 
+ Run number: 45 
+ Searching for catfood 
+ Getting older tweets 
+ starting from tweet 1234567890
+ Getting newer tweets 
+ starting from tweet 1234567890
+    Retrieved 98 tweets for search on cattoy
+    Retrieved 98 tweets for search on cattoy
+ start resting: 2018-06-22 17:00:46.535895 
+ --------------------------------- 2018-06-22 17:00:46.536902 --------------------------- 
+ Run number: 45 
+ Searching for catfood 
+ Getting older tweets 
+ starting from tweet 1234567890
+ Getting newer tweets 
+ starting from tweet 1234567890
+    Retrieved 98 tweets for search on cattoy
+    Retrieved 98 tweets for search on cattoy
+ start resting: 2018-06-22 17:01:32.710549 
+ --------------------------------- 2018-06-22 17:01:32.711648 --------------------------- 
+ Run number: 45 
+ Searching for catfood 
+ Getting older tweets 
+ starting from tweet 1234567890
+ Getting newer tweets 
+ starting from tweet 1234567890
+    Retrieved 98 tweets for search on cattoy
+    Retrieved 98 tweets for search on cattoy
+ start resting: 2018-06-22 17:01:51.604633 
+ --------------------------------- 2018-06-22 17:01:51.605843 --------------------------- 
+ Run number: 45 
+ Searching for catfood 
+ Getting older tweets 
+ starting from tweet 1234567890
+ Getting newer tweets 
+ starting from tweet 1234567890
+    Retrieved 98 tweets for search on cattoy
+    Retrieved 98 tweets for search on cattoy
+ start resting: 2018-06-22 17:05:23.691967 
+ --------------------------------- 2018-06-22 17:05:23.693079 --------------------------- 
+ Run number: 45 
+ Searching for catfood 
+ Getting older tweets 
+ starting from tweet 1234567890
+ Getting newer tweets 
+ starting from tweet 1234567890
+    Retrieved 98 tweets for search on cattoy
+    Retrieved 98 tweets for search on cattoy
+ start resting: 2018-06-22 18:36:04.130591 
+ --------------------------------- 2018-06-22 18:36:04.131713 --------------------------- 
+ Run number: 45 
+ Searching for catfood 
+ Getting older tweets 
+ starting from tweet 1234567890
+ Getting newer tweets 
+ starting from tweet 1234567890
+    Retrieved 98 tweets for search on cattoy
+    Retrieved 98 tweets for search on cattoy
+ start resting: 2018-06-25 12:11:25.501868 
+ --------------------------------- 2018-06-25 12:11:25.502948 --------------------------- 
+ Run number: 45 
+ Searching for catfood 
