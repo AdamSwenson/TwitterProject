@@ -10,8 +10,7 @@ from unittest.mock import Mock
 import aiounittest
 
 from ProcessingTools.Controllers import AsyncControl
-from ProcessingTools.Queues import DummyQueues
-from tests.helpers import DummyCursors, Factories
+from tests.helpers import DummyCursors, Factories, DummyQueues
 
 
 async def add( x, y ):

@@ -8,25 +8,24 @@ __author__ = 'adam'
 
 import datetime
 import random
-import environment
 import factory
 from faker import Faker
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import scoped_session, sessionmaker
 
-import DataTools.DataStructures
-import DataTools.TweetORM as TweetORM
-import DataTools.WordORM as WordORM
+from . import settings
+
+
+import Models.TweetORM as TweetORM
+import Models.WordORM as WordORM
 # from deprecated.Listeners import IListener
 from ProcessingTools.Queues.Interfaces import IQueueHandler
 
-engine = create_engine('sqlite://')
-session = scoped_session(sessionmaker(bind=engine))
-Base = declarative_base()
-
-Base.metadata.create_all(engine)
-
+import TwitterDatabase.Models.DataStructures
+# engine = create_engine('sqlite://')
+# session = scoped_session(sessionmaker(bind=engine))
+# Base = declarative_base()
+#
+# Base.metadata.create_all(engine)
+#
 
 def fake_text():
     return Faker().paragraph(nb_sentences=3, variable_nb_sentences=True, ext_word_list=None)
@@ -35,7 +34,10 @@ def fake_text():
 class UserFactory(factory.alchemy.SQLAlchemyModelFactory):
     class Meta:
         model = TweetORM.Users
-        sqlalchemy_session = session  # the SQLAlchemy session object
+
+        # Use the not-so-global scoped_session
+        # Warning: DO NOT USE common.Session()!
+        sqlalchemy_session = settings.Session  # the SQLAlchemy session object
 
     userID = factory.Sequence(lambda n: n)
     screen_name = factory.Sequence(lambda n: u'User %d' % n)
@@ -47,7 +49,10 @@ class UserFactory(factory.alchemy.SQLAlchemyModelFactory):
 class TweetFactory(factory.alchemy.SQLAlchemyModelFactory):
     class Meta:
         model = TweetORM.Tweets
-        sqlalchemy_session = session  # the SQLAlchemy session object
+
+        # Use the not-so-global scoped_session
+        # Warning: DO NOT USE common.Session()!
+        sqlalchemy_session = settings.Session
 
     tweetID = factory.Sequence(lambda n: n)
     userID = factory.Sequence(lambda n: n)
@@ -58,7 +63,10 @@ class TweetFactory(factory.alchemy.SQLAlchemyModelFactory):
 class WordFactory(factory.alchemy.SQLAlchemyModelFactory):
     class Meta:
         model = WordORM.Word
-        sqlalchemy_session = session  # the SQLAlchemy session object
+
+        # Use the not-so-global scoped_session
+        # Warning: DO NOT USE common.Session()!
+        sqlalchemy_session = settings.Session
 
     id = factory.Sequence(lambda n: n)
     inserted_at = datetime.datetime.now()
@@ -93,10 +101,10 @@ class DummyIListenerFactory: #IListener):
 
 
 def TweetResultFactory():
-    return DataTools.DataStructures.make_tweet_result( random.randint( 0, 10 ), random.randint( 0, 10 ), Faker().word(),
-                                                       random.randint( 0, 99999999999 ) )
+    return TwitterDatabase.Models.DataStructures.make_tweet_result( random.randint( 0, 10 ), random.randint( 0, 10 ), Faker().word(),
+                                                                    random.randint( 0, 99999999999 ) )
 
 
 def UserResultFactory():
-    return DataTools.DataStructures.make_user_result( random.randint( 0, 10 ), random.randint( 0, 10 ), Faker().word(),
-                                                      random.randint( 0, 99999999999 ) )
+    return TwitterDatabase.Models.DataStructures.make_user_result( random.randint( 0, 10 ), random.randint( 0, 10 ), Faker().word(),
+                                                                   random.randint( 0, 99999999999 ) )

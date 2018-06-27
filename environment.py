@@ -8,8 +8,8 @@ import sys
 
 ############################## Global control variables ###############
 # Whether this is a test
-# TEST = True
-TEST = False
+TEST = True
+# TEST = False
 
 # ITEM_TYPE = 'user'
 ITEM_TYPE = 'tweet'
@@ -37,7 +37,7 @@ BASE = '%s/Dropbox/PainNarrativesLab' % ROOT
 PROJ_BASE = "%s/TwitterProject" % BASE
 ANALYSIS_PATH = "%s/TwitterDataAnalysis" % PROJ_BASE
 COMMON_TOOLS_PATH = "%s/CommonTools" % PROJ_BASE
-SERVER_PATH = "%s/TwitterDatabaseServer" % PROJ_BASE
+SERVER_PATH = "%s/TwitterDatabase" % PROJ_BASE
 TEXT_TOOLS_PATH = "%s/TextTools" % PROJ_BASE
 MINING_PATH = "%s/TwitterMining" % PROJ_BASE
 UNIT_TESTS_PATH = "%s/tests" % PROJ_BASE
@@ -71,7 +71,7 @@ INTEGRITY_LOG_FOLDER_PATH = "%s/integrity" % LOG_FOLDER_PATH
 # sys.path.append( '%s/TextTools/TextProcessors' % BASE )
 # sys.path.append( "%s/ProcessingTools" % PROJ_BASE )
 # sys.path.append( "%s/profiling" % PROJ_BASE )
-# sys.path.append( '%s/Servers' % BASE )
+# sys.path.append( '%s/ServerTools' % BASE )
 #
 # # the directory that contains various common custom classes
 # sys.path.append( '%s/Dropbox/iPythonFiles/BaseClasses' % ROOT )

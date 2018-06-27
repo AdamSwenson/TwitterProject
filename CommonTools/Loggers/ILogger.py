@@ -9,8 +9,6 @@ from logbook import Logger
 class ILogger(object):
 
     def __init__(self):
-        # self.name= name
-        # self._process_kwargs(kwargs)
         self.logger = Logger(self.name)
 
     def _process_kwargs(self, kwargs):

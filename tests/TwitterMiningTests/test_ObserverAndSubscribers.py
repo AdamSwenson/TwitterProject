@@ -1,6 +1,6 @@
 import unittest
 
-from TwitterMining.AutomaticMiner.ObserverAndSubscribers import *
+from TwitterMining.Miner.ObserverAndSubscribers import *
 from collections import deque
 
 class SearchMock:

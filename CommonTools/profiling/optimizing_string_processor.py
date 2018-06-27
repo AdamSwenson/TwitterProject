@@ -27,7 +27,7 @@ import TextTools.Filtration.Filters as Filters
 from deprecated import Listeners, Workers
 import Queues.QueueTools as QT
 
-import DataTools.Cursors
+import DataTools
 import ConstantsAndUtilities
 import WordORM
 

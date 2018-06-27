@@ -9,8 +9,8 @@ from numpy.testing.decorators import setastest
 from tests.helpers.DaoMocks import *
 from tests.helpers.TwitterProjectTestEntities import *
 from TwitterMining.DatabaseTools.MySQLTools import *
-from TwitterMining.AccessManagement.SqlCredentials import TestingCredentialLoader
-from TwitterMining.SearchResultsProcessing.TweetDataProcessors import *
+from Credentialing.SqlCredentials import TestingCredentialLoader
+from TwitterMining.SearchResultsProcessing.TweetResults import *
 
 
 class TweetServiceTest(unittest.TestCase):

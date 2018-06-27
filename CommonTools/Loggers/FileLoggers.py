@@ -7,7 +7,7 @@ import os
 
 from logbook import FileHandler
 
-from . import ILogger
+from CommonTools.Loggers.ILogger import ILogger
 
 BASE = os.getenv("HOME")
 # todo restore environment

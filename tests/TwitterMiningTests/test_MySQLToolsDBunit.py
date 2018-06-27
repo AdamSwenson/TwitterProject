@@ -9,7 +9,7 @@ from tests.helpers.SQLUnitTestingTools import *
 #from DaoMocks import *
 from TwitterMining.DatabaseTools.MySQLTools import *
 # from TwitterMining.DatabaseAccessObjects.SqlCredentials import TestingCredentialLoader
-from TwitterMining.SearchResultsProcessing.TweetDataProcessors import *
+from TwitterMining.SearchResultsProcessing.TweetResults import *
 
 
 class HashtagServiceTest(unittest.TestCase):

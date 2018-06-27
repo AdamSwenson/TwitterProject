@@ -17,8 +17,7 @@ from TextTools.Replacement.Modifiers import *
 from deprecated import Listeners, Workers
 import Queues.QueueTools as QT
 
-import DataTools.Cursors
-
+import DataTools
 
 if __name__ == '__main__':
     Queue = QT.SaveQueueHandler( )
@@ -26,7 +25,7 @@ if __name__ == '__main__':
 
     # Load cursor for tweet ids
     threads = []
-    cursor = DataTools.Cursors.TweetCursor( )
+    cursor = DataTools.Cursors.TweetCursor()
 
     word_processor = TextTools.Processors.SingleWordProcessors.SingleWordProcessor()
     ignore = ConstantsAndUtilities.Ignore()

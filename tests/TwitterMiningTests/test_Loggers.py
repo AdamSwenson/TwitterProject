@@ -1,6 +1,6 @@
 import unittest
 
-from TwitterMining.Logging.Loggers import *
+from Loggers.SearchLoggers import *
 
 
 class SearchLoggerTest(unittest.TestCase):

@@ -11,8 +11,9 @@ from tests.helpers.DataAndFunctionsForTesting import *
 from tests.helpers.Factories import *
 
 from ProcessingTools.Processors.UserProcessing import Processor
+from TwitterDatabase.Models.DataStructures import Result
 
-# from Servers.ClientSide import ServerQueueDropin
+# from ServerTools.ClientSide import ServerQueueDropin
 from TextTools.TextTools.Filtration.Filters import URLFilter, UsernameFilter, PunctuationFilter, NumeralFilter, StopwordFilter
 from TextTools.TextTools.Replacement.Modifiers import WierdBPrefixConverter, CaseConverter
 from TextTools.TextTools.Processors.SingleWordProcessors import SingleWordProcessor

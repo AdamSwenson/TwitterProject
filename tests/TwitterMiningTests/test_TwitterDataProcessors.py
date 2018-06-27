@@ -3,7 +3,7 @@ Unit tests for test_twitterdataprocessors
 """
 import unittest
 
-from TwitterMining.SearchResultsProcessing.TweetDataProcessors import *
+from TwitterMining.SearchResultsProcessing.TweetResults import *
 from tests.helpers.TwitterProjectTestEntities import *
 
 

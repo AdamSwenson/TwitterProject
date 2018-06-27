@@ -5,7 +5,7 @@ __author__ = 'adam'
 
 
 from tests.helpers.Factories import UserFactory
-from DataTools.Cursors import Cursor
+from TwitterDatabase.DatabaseAccessObjects.Cursors import Cursor
 
 
 class DummyUserCursor(Cursor):
