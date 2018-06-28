@@ -10,6 +10,9 @@ from tests.helpers.TwitterSearchResultFactories import TweetSearchResultFactory
 
 
 def serializeTweetResult( result ):
+    """The search script returns objects, converts into a dictionary so
+    that they can be serialized when we send them to ther server.
+      """
     return { k: getattr( result, k ) for k in result.__dict__ }
 
 

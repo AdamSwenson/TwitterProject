@@ -3,17 +3,16 @@ Created by adam on 6/25/18
 """
 __author__ = 'adam'
 
-import environment
-from RequestHandlers.WordMapHandlers import WordMapHandler
-from RequestHandlers.TweetSaveHandlers import TweetSaveHandler
-from RequestHandlers.UserSaveHandlers import UserSaveHandler
+from Server.RequestHandlers.WordMapHandlers import WordMapHandler
+from Server.RequestHandlers.TweetSaveHandlers import TweetSaveHandler
+from Server.RequestHandlers.UserSaveHandlers import UserSaveHandler
 
-USER_ROUTE = r"/users"
-TWEET_ROUTE = r"/tweets"
-WORD_MAP_ROUTE = r"/"
+USER_ROUTE = "/users"
+TWEET_ROUTE = "/tweets"
+WORD_MAP_ROUTE = "/"
 
 route_handlers = [
-    (USER_ROUTE, UserSaveHandler),
-    (TWEET_ROUTE, TweetSaveHandler),
-    (WORD_MAP_ROUTE, WordMapHandler),
+    (r"%s" % USER_ROUTE, UserSaveHandler),
+    (r"%s" % TWEET_ROUTE, TweetSaveHandler),
+    (r"%s" % WORD_MAP_ROUTE, WordMapHandler),
 ]

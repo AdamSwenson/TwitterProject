@@ -6,6 +6,7 @@ import unittest
 from TwitterDatabase.Models.TweetORM import UserFactory, User, Users
 
 __author__ = 'adam'
+import json
 
 from sqlalchemy import inspect
 
@@ -15,7 +16,7 @@ class UserFactoryTests( unittest.TestCase ):
         pass
 
     def test_properly_fills_defined_attributes( self ):
-        data = { 'userID': 4,
+        data = { 'id': 4,
                  'screen_name': 'taco',
                  'id_str': '4',
                  'name': 'dog food',
@@ -29,8 +30,10 @@ class UserFactoryTests( unittest.TestCase ):
         for key in data.keys():
             self.assertEqual( getattr( result, key ), data[ key ], "%s was set on object" % key )
 
+        self.assertEqual(getattr(result, 'userID'), data['id'], "userID was set from the incoming id")
+
     def test_stores_undefined_attributes_to_json( self ):
-        defined_data = { 'userID': 4,
+        defined_data = { 'id': 4,
                      'screen_name': 'taco',
                      'id_str': '4',
                      'name': 'dog food',
@@ -48,8 +51,11 @@ class UserFactoryTests( unittest.TestCase ):
         for key in defined_data.keys():
             self.assertEqual( getattr( result, key ), defined_data[ key ], "%s was set on object" % key )
 
+        self.assertEqual(getattr(result, 'userID'), data['id'], "userID was set from the incoming id")
+
         # Check the undefined stuff
         od = getattr( result, 'other_data' )
+        od = json.loads(od)
         for key in undefined_data.keys():
             self.assertEqual(od[key], undefined_data[ key ], "%s was set in other_data" % key )
 

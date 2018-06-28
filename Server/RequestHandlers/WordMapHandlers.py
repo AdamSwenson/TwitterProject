@@ -1,7 +1,7 @@
 """
 Created by adam on 4/23/18
 """
-from Queues.Queues import WordMapSaveQueue
+from Server.Queues.Queues import WordMapSaveQueue
 
 __author__ = 'adam'
 

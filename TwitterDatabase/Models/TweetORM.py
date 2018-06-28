@@ -7,8 +7,8 @@ from sqlalchemy import Table, Column, ForeignKey, Integer, String, JSON
 from sqlalchemy.ext.declarative import declarative_base
 
 import DatabaseAccessObjects.EngineMakers
-from DatabaseAccessObjects import DataConnections
-
+# from DatabaseAccessObjects import DataConnections
+import json
 # connecting to db
 
 # Base class that maintains the catalog of tables and classes in db
@@ -101,28 +101,55 @@ def TweetFactory( data: dict ):
     """
     # The first step is to sort the incoming data
     mapper = inspect(Tweets)
+
+    # create the list of valid keys
     defined_keys = [column.key for column in mapper.attrs]
 
-    defined_data = {}
-    forJson = { }
-    for k in data.keys():
-        if k in defined_keys:
-            defined_data[k] = data[k]
-        else:
-            forJson[k] = data[k]
+    defined_data = _make_defined_data(data, defined_keys)
 
-    # create a user instance with the data
-    u = Tweet(**defined_data)
-    # and set the data that didn't have a field
-    # to the json field
-    u.other_data = forJson
-    return u
+    # Now set any fields which do not have couterparts in the
+    # the incoming data
+    defined_data['tweetID'] = int(data['id_str'])
+    defined_data['userID'] = int(data['user_id'])
+
+    # create a new instance with the data
+    return Tweet(**defined_data)
 
 
 class User(Users):
     """Better named alias"""
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+
+def _make_defined_data(data, defined_keys):
+    """Takes the incoming tweet data and pulls out
+    all of the items which go into fields of the
+    db and puts the rest into a json string under other_data
+    """
+    # This will be the data that goes directly into the model
+    defined_data = {}
+    # This will be the data that goes into the other_data field
+    forJson = { }
+
+    for k in data.keys():
+        datum = data[k]
+        # check whether it is a dict and encode, if necessary
+        if type(datum) == dict:
+            datum = json.dumps(datum)
+
+        if k in defined_keys:
+            defined_data[k] = datum
+
+        else:
+            forJson[k] = datum
+
+    # Set the data that didn't have a field
+    # to the json field
+    defined_data['other_data'] = json.dumps(forJson)
+
+    return defined_data
+
 
 
 def UserFactory( data: dict ):
@@ -139,22 +166,38 @@ def UserFactory( data: dict ):
     """
     # The first step is to sort the incoming data
     mapper = inspect(Users)
+    # These will be the fields to save to corresponding columns
+    # in the database
     defined_keys = [column.key for column in mapper.attrs]
 
-    defined_data = {}
-    forJson = { }
-    for k in data.keys():
-        if k in defined_keys:
-            defined_data[k] = data[k]
-        else:
-            forJson[k] = data[k]
+    defined_data = _make_defined_data(data, defined_keys)
+
+    # Now set any fields which do not have couterparts in the
+    # the incoming data
+    defined_data['userID'] = int(defined_data['id'])
 
     # create a user instance with the data
-    u = User(**defined_data)
-    # and set the data that didn't have a field
-    # to the json field
-    u.other_data = forJson
-    return u
+    return User(**defined_data)
+
+    #
+    # # This will be the data that goes directly into the model
+    # defined_data = {}
+    # # This will be the data that goes into the other_data field
+    # forJson = { }
+    #
+    # for k in data.keys():
+    #     datum = data[k]
+    #     # check whether it is a dict and encode, if necessary
+    #     if type(datum) == dict:
+    #         datum = json.dumps(datum)
+    #
+    #     if k in defined_keys:
+    #         defined_data[k] = datum
+    #
+    #     else:
+    #         forJson[k] = datum
+
+
 
 
 

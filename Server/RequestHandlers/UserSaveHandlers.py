@@ -17,12 +17,13 @@ from CommonTools.Profiling.OptimizingTools import timestamp_writer, timestamped_
 from Loggers.FileLoggers import FileWritingLogger
 from Server.ServerTools import Helpers
 from Server.ServerTools.ServerExceptions import DBExceptions
-from Queues.OrmSaveQueue import OrmSaveQueue
+from Server.Queues.OrmSaveQueue import OrmSaveQueue
 from Server.RequestHandlers.HandlerParent import IRequestHandler
 from TwitterDatabase.Models.TweetORM import UserFactory
 
-
-class UserSaveHandler( IRequestHandler ):
+from tornado_sqlalchemy import SessionMixin
+import tornado.web
+class UserSaveHandler(  tornado.web.RequestHandler, IRequestHandler, SessionMixin ):
     """Handles requests to save user datas to the db """
 
     # Queue results at class level so that any instance
@@ -40,14 +41,17 @@ class UserSaveHandler( IRequestHandler ):
 
     def delete( self ):
         """closes all operations"""
-        type( self ).shutdown()
+        pass
+        # with self.make_session() as session:
+        #     type( self ).shutdown(session)
 
     @gen.coroutine
     def get( self ):
         """Flushes any remaining results in the queue to the dbs"""
-        # print( "%s in queue; flushing now" % self.queue_length)
+        print( "%s in queue; flushing now" % self.queue_length)
         # ql = self.queue_length
-        yield from type( self ).q.save_queued()
+        with self.make_session() as session:
+            yield from type( self ).q.save_queued(session)
         self.write( 'success' )
 
 
@@ -68,8 +72,8 @@ class UserSaveHandler( IRequestHandler ):
             users = [UserFactory(p) for p in payload]
             #     if environment.INTEGRITY_LOGGING:
             #         timestamped_count_writer( environment.SERVER_RECEIVE_LOG_FILE, user.userID, 'userid' )
-
-            yield from asyncio.ensure_future(type( self ).q.enque( users, self.session ))
+            with self.make_session() as session:
+                yield from asyncio.ensure_future(type( self ).q.enque( users, session ))
             self.write( "success" )
 
         except DBExceptions as e:

@@ -11,7 +11,7 @@ import random
 import factory
 from faker import Faker
 
-from . import settings
+from tests.helpers import settings
 
 
 import Models.TweetORM as TweetORM

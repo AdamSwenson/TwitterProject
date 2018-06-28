@@ -52,7 +52,7 @@ class OrmSaveQueue:
             # instance gets in the way
             # async with lock:
             [ self.store.appendleft( r ) for r in userList ]
-            print( len( self.store ), self.batch_size )
+            print( "  %s in store; batch size is %s" % (len( self.store ), self.batch_size ))
 
         # if we've reached the batch size, we save them to the db
         # needs to be greater in case hit limit in middle of list
@@ -67,15 +67,22 @@ class OrmSaveQueue:
         #     timestamp_writer( environment.SERVER_SAVE_TIMESTAMP_LOG_FILE )
 
         async with lock:
-            try:
-                b = [ self.store.pop() for _ in range( 0, self.batch_size ) ]
-                # with self.make_session() as session:
+            # try:
+            if len(self.store) == 0 : return True
+
+            b = [ self.store.pop() for _ in range( 0, len(self.store) ) ]
+            print("b", b)
+            # b = [self.store.pop() ]
+            # b = [ self.store.pop() for _ in range( 0, self.batch_size ) ]
+            # with self.make_session() as session:
+            if len(b) > 0:
                 session.add_all( b )
-                print( len( session.new ) )
+                # print( len( session.new ) )
                 session.commit()
-            except Exception as e:
-                print( "error  %s " % e )
-                raise e
+            # except Exception as e:
+
+                # print( "error  %s " % e )
+                # raise e
 
     #
     # async def handle_send( self, future: asyncio.Future ):

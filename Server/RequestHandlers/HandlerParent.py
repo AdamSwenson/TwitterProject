@@ -11,7 +11,7 @@ from tornado_sqlalchemy import SessionMixin
 from Server.ServerTools.ServerExceptions import ShutdownCommanded
 
 
-class IRequestHandler( tornado.web.RequestHandler, SessionMixin ):
+class IRequestHandler: # tornado.web.RequestHandler, SessionMixin ):
     """Handles requests to save word mappings from user descriptions and tweets to the db """
 
     # def __init__( self, application, request, **kwargs ):
@@ -24,26 +24,18 @@ class IRequestHandler( tornado.web.RequestHandler, SessionMixin ):
         # add to the stored request count.
         cls._requestCount += 1
 
-    @gen.coroutine
-    def get( self ):
-        """Flushes any remaining results in the queue to the dbs"""
-        # print( "%s in queue; flushing now" % self.queue_length)
-        # ql = self.queue_length
-        yield from type( self ).q.save_queued()
-        self.write( 'success' )
-
 
     @property
     def queue_length( self ):
         return len( type( self ).q.store )
 
     @classmethod
-    def shutdown( cls ):
+    def shutdown( cls, session ):
         """This handles the client side command to cease all
         server operations. That involves flushing the
         queue and writing to requisite log files"""
         # flush the queue (for this handler instance!)
-        cls.q.save_queued()
+        cls.q.save_queued(session)
 
         message = "Shutdown called. \n # requests: %s \n # queries: %s" % (cls._requestCount, cls._queryCount)
         print( message )

@@ -83,9 +83,9 @@ class MySqlConnection( Connection ):
     Uses the MySQL-Connector-Python driver (pip install MySQL-Connector-Python driver)
     """
 
-    def __init__( self, credential_file ):
+    def __init__( self, credential_file, create_engine=True ):
         self._driver = '+mysqlconnector'
-        super( __class__, self ).__init__( credential_file )
+        super( __class__, self ).__init__( credential_file , create_engine)
 
     def make_dsn( self ):
         if self._port:

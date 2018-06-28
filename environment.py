@@ -18,6 +18,9 @@ ITEM_TYPE = 'tweet'
 # LIMIT = None
 LIMIT = 1000
 
+WHICH_SERVER = 'orm'
+# WHICH_SERVER = 'non-orm'
+
 ############ Whether to log
 # Log the id of each user or tweet as they pass through each
 # stage of processing. This is used for ensuring accuracy.
@@ -28,6 +31,16 @@ TIME_LOGGING = False
 SLACK_NOTIFY = False
 # at what point to send an update to slack
 SLACK_HEARTBEAT_LIMIT = 1000000
+
+
+
+############################## Queues ###############################
+# How many transactions to queue before
+# flushing / committing
+DB_QUEUE_SIZE = 1000
+CLIENT_QUEUE_SIZE = 700
+
+
 
 ############################## Locations of code ###############
 ROOT = os.getenv( "HOME" )
@@ -49,11 +62,15 @@ sys.path.append(COMMON_TOOLS_PATH)
 sys.path.append(SERVER_PATH )
 sys.path.append( TEXT_TOOLS_PATH )
 sys.path.append( MINING_PATH )
+sys.path.append(UNIT_TESTS_PATH)
 
+
+########### Credentials
 
 # CredentialLoader
 CREDENTIAL_FILE = '%s/private_credentials/sql_local_credentials.xml' % BASE
 SLACK_CREDENTIAL_FILE = "%s/private_credentials/slack-credentials.xml" % BASE
+TWITTER_CREDENTIAL_FILE = "%s/private_credentials/twittercredentials2.xml" % BASE
 
 # Data and experiments
 EXPERIMENTS_FOLDER = BASE + '/Experiments'
@@ -75,12 +92,6 @@ INTEGRITY_LOG_FOLDER_PATH = "%s/integrity" % LOG_FOLDER_PATH
 #
 # # the directory that contains various common custom classes
 # sys.path.append( '%s/Dropbox/iPythonFiles/BaseClasses' % ROOT )
-
-############################## Queues ###############################
-# How many transactions to queue before
-# flushing / committing
-DB_QUEUE_SIZE = 1000
-CLIENT_QUEUE_SIZE = 700
 
 ####################### DB files ##################################
 # sqlite db files
@@ -114,7 +125,7 @@ ENGINE = 'sqlite-file'
 if TEST:
     DB = 'twitter_dataTEST' if ITEM_TYPE == 'user' else 'twitter_dataTEST'
 else:
-    DB = 'twitter_data' if ITEM_TYPE == 'user' else 'twitter_data'
+    DB = 'twitter_data' if ITEM_TYPE == 'tweet' else 'twitter_data'
 
 
 # Sometimes things go wrong in develoment and

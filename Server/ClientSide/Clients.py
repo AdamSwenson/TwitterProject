@@ -42,7 +42,7 @@ class Client( ProcessIdHaver, ResponseStoreMixin ):
         """Create one client instance for all to share"""
         cls.http_client = AsyncHTTPClient()
 
-    def __init__( self, url=environment.DB_URL ):
+    def __init__( self, url ):
         self.id_prefix = 'client.send'
         super().__init__()
         self.url = url
