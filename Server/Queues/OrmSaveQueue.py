@@ -1,6 +1,8 @@
 """
 Created by adam on 6/25/18
 """
+import sqlalchemy
+
 __author__ = 'adam'
 
 import asyncio
@@ -32,27 +34,21 @@ class OrmSaveQueue:
         self._queryCount += 1
 
     @gen.coroutine
-    def enque( self, userList: list, session=None ):  # : asyncio.Future ):
+    def enque( self, modelList: list, session=None ):  # : asyncio.Future ):
         """
         Push a list of users into the queue for saving to
         the db. Once the batch size has been reached,
         it will be saved.
         The session is an instance of a sqlalchemy session
         :param session:
-        :type userList: list
+        :type modelList: list
         """
-        # Handle logging
-        # if environment.TIME_LOGGING:
-        #     timestamp_writer( environment.CLIENT_ENQUE_TIMESTAMP_LOG_FILE )
-        # if environment.INTEGRITY_LOGGING:
-        #     [timestamped_count_writer(environment.CLIENT_ENQUE_LOG_FILE, r.id, 'userid') for r in resultList]
         with (yield lock.acquire()):
-            # Push the user objects into the queue
+            # Push the model objects into the queue
             # we need to use the lock so that no other
             # instance gets in the way
             # async with lock:
-            [ self.store.appendleft( r ) for r in userList ]
-            print( "  %s in store; batch size is %s" % (len( self.store ), self.batch_size ))
+            [ self.store.append( r ) for r in modelList ]
 
         # if we've reached the batch size, we save them to the db
         # needs to be greater in case hit limit in middle of list
@@ -60,26 +56,24 @@ class OrmSaveQueue:
             yield from self.save_queued( session )
 
     async def save_queued( self, session ):
-        """Flushes the user objects in the queue to the database"""
+        """Flushes the orm objects in the queue to the database"""
         self.increment_query_count()
 
-        # if environment.TIME_LOGGING:
-        #     timestamp_writer( environment.SERVER_SAVE_TIMESTAMP_LOG_FILE )
-
         async with lock:
-            # try:
             if len(self.store) == 0 : return True
 
             b = [ self.store.pop() for _ in range( 0, len(self.store) ) ]
-            print("b", b)
-            # b = [self.store.pop() ]
-            # b = [ self.store.pop() for _ in range( 0, self.batch_size ) ]
-            # with self.make_session() as session:
-            if len(b) > 0:
-                session.add_all( b )
-                # print( len( session.new ) )
-                session.commit()
-            # except Exception as e:
+
+            for o in b:
+                try:
+                    session.add(o)
+                    session.commit()
+                except sqlalchemy.exc.IntegrityError as e:
+                    session.rollback()
+
+
+
+        # except Exception as e:
 
                 # print( "error  %s " % e )
                 # raise e

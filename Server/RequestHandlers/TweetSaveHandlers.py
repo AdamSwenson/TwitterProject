@@ -5,23 +5,23 @@ Created by adam on 6/25/18
 """
 __author__ = 'adam'
 
-from progress.spinner import Spinner
-from tornado import gen
 import asyncio
 
+from progress.spinner import Spinner
+from tornado import gen
+
 import environment
-from CommonTools.Profiling.OptimizingTools import timestamp_writer, timestamped_count_writer
+from CommonTools.Profiling.OptimizingTools import timestamp_writer
 # Loggers and instrumentation
 from Loggers.FileLoggers import FileWritingLogger
+from Server.Queues.OrmSaveQueue import OrmSaveQueue
+from Server.RequestHandlers.HandlerParent import IRequestHandler
 from Server.ServerTools import Helpers
 from Server.ServerTools.ServerExceptions import DBExceptions
-from Server.Queues.OrmSaveQueue import OrmSaveQueue
-
 from TwitterDatabase.Models.TweetORM import TweetFactory
-from Server.RequestHandlers.HandlerParent import IRequestHandler
 
 
-class TweetSaveHandler(  IRequestHandler ):
+class TweetSaveHandler( IRequestHandler ):
     """Handles requests to save user datas to the db """
 
     # Queue results at class level so that any instance
@@ -39,14 +39,15 @@ class TweetSaveHandler(  IRequestHandler ):
 
     def delete( self ):
         """closes all operations"""
-        type( self ).shutdown()
+        with self.make_session() as session:
+            type( self ).shutdown(session)
 
     @gen.coroutine
     def get( self ):
         """Flushes any remaining results in the queue to the dbs"""
-        # print( "%s in queue; flushing now" % self.queue_length)
-        # ql = self.queue_length
-        yield from type( self ).q.save_queued()
+        print( "%s in queue; flushing now" % self.queue_length )
+        with self.make_session() as session:
+            yield from type( self ).q.save_queued( session )
         self.write( 'success' )
 
     @gen.coroutine
@@ -62,15 +63,15 @@ class TweetSaveHandler(  IRequestHandler ):
         try:
             # decode json
             payload = Helpers.decode_payload( self.request.body )
-            # if environment.INTEGRITY_LOGGING:
-            #     timestamped_count_writer( environment.SERVER_RECEIVE_LOG_FILE, result.id, 'tweetid' )
 
             # The payload is a list containing dictionaries
-            tweets = [TweetFactory(p) for p in payload]
-            yield from asyncio.ensure_future(type( self ).q.enque( tweets, self.session ))
+            tweets = [ TweetFactory( p ) for p in payload ]
+            with self.make_session() as session:
+                yield from asyncio.ensure_future( type( self ).q.enque( tweets, session ) )
             self.write( "success" )
 
         except DBExceptions as e:
+            print( 'db error: %s' % e.message )
             # self.logger.log_error('db error: %s' % e.message)
             self.write( "error" )
 

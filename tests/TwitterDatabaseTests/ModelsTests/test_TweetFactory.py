@@ -15,8 +15,8 @@ class TweetFactoryTests( unittest.TestCase ):
     def test_properly_fills_defined_attributes( self ):
         data = {
             'id_str': 4,
-            'user_id': 6,
-            'tweetText': "I sure do love tacos. Also cats",
+            'user' : {'id_str': 6},
+            'text': "I sure do love tacos. Also cats",
             'favorite_count': 45000
         }
         # call
@@ -25,17 +25,18 @@ class TweetFactoryTests( unittest.TestCase ):
         # check
         self.assertIsInstance( result, Tweet, 'result is correct type' )
         for key in data.keys():
-            if key not in ['id_str', 'user_id']:
+            if key not in ['id_str', 'user_id', 'user', 'text']:
                 self.assertEqual( getattr( result, key ), data[ key ], "%s was set on object" % key )
 
         self.assertEqual( result.tweetID, data[ 'id_str' ], "tweetID set from id_str" )
-        self.assertEqual( result.userID, data[ 'user_id' ], "userID set from user_id" )
+        self.assertEqual( result.userID, data[ 'user']['id_str' ], "userID set from user.id_str" )
+        self.assertEqual( result.tweetText, data[ 'text' ], "tweet text set from text " )
 
     def test_stores_undefined_attributes_to_json( self ):
         defined_data = {
             'id_str': 4,
-            'user_id': 6,
-            'tweetText': "I sure do love tacos. Also cats",
+            'user' : {'id_str': 6},
+            'text': "I sure do love tacos. Also cats",
             'favorite_count': 45000
         }
         undefined_data = { 'taco_fun_day': 'tuesday', 'dog_park_locations': 5 }
@@ -48,7 +49,7 @@ class TweetFactoryTests( unittest.TestCase ):
         self.assertIsInstance( result, Tweet, 'result is correct type' )
 
         for key in defined_data.keys():
-            if key not in ['id_str', 'user_id']:
+            if key not in ['id_str', 'user_id', 'user', 'text']:
                 self.assertEqual( getattr( result, key ), defined_data[ key ], "%s was set on object" % key )
 
         # Check the undefined stuff

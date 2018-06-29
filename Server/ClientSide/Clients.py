@@ -55,15 +55,8 @@ class Client( ProcessIdHaver, ResponseStoreMixin ):
 
     @gen.coroutine
     def send( self, result ):
-        """Posts the result to the server, yields a future"""
+        """Posts the result or  to the server, yields a future"""
         self.sentCount += 1
-
-        if environment.TIME_LOGGING:
-            timestamp_writer( environment.CLIENT_SEND_TIMESTAMP_LOG_FILE )
-
-        if environment.INTEGRITY_LOGGING:
-            [ timestamped_count_writer( environment.CLIENT_SEND_LOG_FILE, r.id, 'userid' ) for r in result ]
-
         payload = Helpers.encode_payload( result )
         try:
             response = yield from self.http_client.fetch( self.url, method="POST", body=payload )

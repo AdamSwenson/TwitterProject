@@ -10,8 +10,11 @@ from tornado_sqlalchemy import SessionMixin
 # Loggers and instrumentation
 from Server.ServerTools.ServerExceptions import ShutdownCommanded
 
+from tornado_sqlalchemy import SessionMixin
+import tornado.web
 
-class IRequestHandler: # tornado.web.RequestHandler, SessionMixin ):
+
+class IRequestHandler( tornado.web.RequestHandler, SessionMixin ):
     """Handles requests to save word mappings from user descriptions and tweets to the db """
 
     # def __init__( self, application, request, **kwargs ):

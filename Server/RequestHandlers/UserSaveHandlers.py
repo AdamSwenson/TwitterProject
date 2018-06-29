@@ -21,9 +21,8 @@ from Server.Queues.OrmSaveQueue import OrmSaveQueue
 from Server.RequestHandlers.HandlerParent import IRequestHandler
 from TwitterDatabase.Models.TweetORM import UserFactory
 
-from tornado_sqlalchemy import SessionMixin
-import tornado.web
-class UserSaveHandler(  tornado.web.RequestHandler, IRequestHandler, SessionMixin ):
+
+class UserSaveHandler( IRequestHandler):
     """Handles requests to save user datas to the db """
 
     # Queue results at class level so that any instance
@@ -49,7 +48,6 @@ class UserSaveHandler(  tornado.web.RequestHandler, IRequestHandler, SessionMixi
     def get( self ):
         """Flushes any remaining results in the queue to the dbs"""
         print( "%s in queue; flushing now" % self.queue_length)
-        # ql = self.queue_length
         with self.make_session() as session:
             yield from type( self ).q.save_queued(session)
         self.write( 'success' )
@@ -70,8 +68,6 @@ class UserSaveHandler(  tornado.web.RequestHandler, IRequestHandler, SessionMixi
             payload = Helpers.decode_payload( self.request.body )
             # The payload is a list containing dictionaries
             users = [UserFactory(p) for p in payload]
-            #     if environment.INTEGRITY_LOGGING:
-            #         timestamped_count_writer( environment.SERVER_RECEIVE_LOG_FILE, user.userID, 'userid' )
             with self.make_session() as session:
                 yield from asyncio.ensure_future(type( self ).q.enque( users, session ))
             self.write( "success" )

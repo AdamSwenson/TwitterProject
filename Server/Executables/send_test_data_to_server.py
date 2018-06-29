@@ -8,16 +8,21 @@ import environment as env
 
 import asyncio
 from Server.ClientSide.Clients import Client
-from Server.ServerTools.Routes import USER_ROUTE
+from Server.ServerTools.Routes import USER_ROUTE, TWEET_ROUTE
 
-TEST_DATA_JSON = "%s/test-user-api-responses" % env.LOG_FOLDER_PATH
+# TEST_DATA_JSON = "%s/test-user-api-responses" % env.LOG_FOLDER_PATH
+TEST_DATA_JSON = "%s/test-tweets-for-user-api-responses.json" % env.LOG_FOLDER_PATH
+
 
 if __name__ == '__main__':
+    print('start')
     # Load test data
     with open(TEST_DATA_JSON, 'r') as f:
         data = json.load(f)
-    url = "%s%s" % (env.DB_URL, USER_ROUTE)
-    print(url)
+    # print(data)
+
+    url = "%s%s" % (env.DB_URL, TWEET_ROUTE)
+    print("sending to: %s" % url)
     c = Client(url)
 
 

@@ -12,6 +12,13 @@ from tornado import gen
 
 # logger = FileWritingLogger(name='Client Response ERROR')
 
+def convert_object_into_dict( result ):
+    """The search script returns objects, converts into a dictionary so
+    that they can be serialized when we send them to ther server.
+      """
+    if type( result ) is dict: return result  # just in case...
+    return { k: getattr( result, k ) for k in result.__dict__ }
+
 
 def encode_payload( result ):
     """JSON encodes a dictionary, named tuple, or object for sending
@@ -20,6 +27,9 @@ def encode_payload( result ):
     try:
         return tornado.escape.json_encode( result )
     except TypeError:
+        if type( result ) is list:
+            return [ tornado.escape.json_encode( r ) for r in result ]
+
         d = { k: getattr( result, k ) for k in result.__dict__ }
         return tornado.escape.json_encode( d )
 
@@ -68,3 +78,4 @@ def make_result_from_decoded_payload( payload ):
         return make_user_result( sentence_index, word_index, text, objId )
 
     raise BadPayloadException
+

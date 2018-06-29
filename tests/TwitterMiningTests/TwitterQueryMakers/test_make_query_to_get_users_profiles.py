@@ -5,7 +5,7 @@ Created by adam on 6/27/18
 __author__ = 'adam'
 
 from unittest import TestCase
-from TwitterMining.TwitterQueryMakers.UserFinder import Searcher, make_query_to_get_users_profiles, make_query_to_get_users_tweets
+from TwitterMining.TwitterQueryMakers.UserQueries import UsersGetter, make_query_to_get_users_profiles, make_query_to_get_users_tweets
 
 class queriesTest( TestCase ):
 

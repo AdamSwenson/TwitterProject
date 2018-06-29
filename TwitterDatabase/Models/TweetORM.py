@@ -110,7 +110,8 @@ def TweetFactory( data: dict ):
     # Now set any fields which do not have couterparts in the
     # the incoming data
     defined_data['tweetID'] = int(data['id_str'])
-    defined_data['userID'] = int(data['user_id'])
+    defined_data['userID'] = int(data['user']['id_str'])
+    defined_data['tweetText'] = data['text']
 
     # create a new instance with the data
     return Tweet(**defined_data)
@@ -149,7 +150,6 @@ def _make_defined_data(data, defined_keys):
     defined_data['other_data'] = json.dumps(forJson)
 
     return defined_data
-
 
 
 def UserFactory( data: dict ):
