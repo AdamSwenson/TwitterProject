@@ -10,7 +10,9 @@ from tornado.httpclient import AsyncHTTPClient
 from tornado.log import gen_log
 from tornado.simple_httpclient import SimpleAsyncHTTPClient
 
-import environment
+import environment as env
+
+from Server.ServerTools.Routes import DB_INFO_ROUTE
 from TwitterDataAnalysis.ProcessingTools.Mixins import ProcessIdHaver
 from Server.ServerTools import Helpers
 
@@ -52,6 +54,12 @@ class Client( ProcessIdHaver, ResponseStoreMixin ):
 
         if not hasattr( self, 'http_client' ):
             type( self ).initialize_client()
+
+    @gen.coroutine
+    def get_max_tweet_id( self ):
+        url = "%s%s" % (env.DB_URL, DB_INFO_ROUTE)
+        response = yield from self.http_client.fetch( url, method="GET")
+        return response
 
     @gen.coroutine
     def send( self, result ):
