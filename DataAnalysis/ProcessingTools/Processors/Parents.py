@@ -5,7 +5,7 @@ Created by adam on 5/20/18
 __author__ = 'adam'
 
 from TextProcessors import Tokenizers
-from  TextTools.TextTools.Processors.Parents import IProcessor
+from  TextProcessingTools.TextTools.Processors.Parents import IProcessor
 
 class IAsyncProcessor( object ):
     """Handles the text processing of items like users and tweets"""
@@ -20,7 +20,7 @@ class IAsyncProcessor( object ):
         """
         Add something which acts on individual words
          to the stack that will run on each word from the tweet
-         :type processor: TextTools.Processors.Parents.IProcessor
+         :type processor: TextProcessingTools.Processors.Parents.IProcessor
          """
         self._word_processors.append( processor )
         self._word_processors = list( set( self._word_processors ) )

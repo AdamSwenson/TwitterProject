@@ -1,8 +1,8 @@
 import string
 import unittest
 
-from TextTools.TextTools.Filtration import Filters
-from TextTools.TextTools.Processors.Exceptions import ExcludedString
+from TextProcessingTools.TextTools.Filtration import Filters
+from TextProcessingTools.TextTools.Processors.Exceptions import ExcludedString
 
 from nltk.corpus import stopwords
 english_stops = set(stopwords.words('english'))

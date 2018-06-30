@@ -1,8 +1,8 @@
 import unittest
 
-from TextTools.TextTools.Filtration import Filters
-from TextTools.TextTools.Replacement import Modifiers
-from TextTools.StatisticalTools import Counters as C
+from TextProcessingTools.TextTools.Filtration import Filters
+from TextProcessingTools.TextTools.Replacement import Modifiers
+from TextProcessingTools.StatisticalTools import Counters as C
 
 filters = [
     Filters.UsernameFilter(),

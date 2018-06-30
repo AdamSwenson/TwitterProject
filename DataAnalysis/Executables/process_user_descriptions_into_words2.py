@@ -20,9 +20,9 @@ async def run(future):
     from ProcessingTools.Queues.AsyncQueues import AsyncServerQueueDropin
 
     # from ServerTools.ClientSide import ServerQueueDropin
-    from TextTools.Filtration.Filters import URLFilter, UsernameFilter, PunctuationFilter, NumeralFilter
-    from TextTools.Replacement.Modifiers import WierdBPrefixConverter, CaseConverter
-    from TextTools.Processors.SingleWordProcessors import SingleWordProcessor
+    from TextProcessingTools.Filtration.Filters import URLFilter, UsernameFilter, PunctuationFilter, NumeralFilter
+    from TextProcessingTools.Replacement.Modifiers import WierdBPrefixConverter, CaseConverter
+    from TextProcessingTools.Processors.SingleWordProcessors import SingleWordProcessor
 
     filters = [
         UsernameFilter(),

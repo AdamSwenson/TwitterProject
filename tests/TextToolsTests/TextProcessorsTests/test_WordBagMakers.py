@@ -4,7 +4,7 @@ Created by adam on 11/18/15
 __author__ = 'adam'
 
 import unittest
-from TextTools.TextProcessors.WordBagMakers import *
+from TextProcessingTools.TextProcessors.WordBagMakers import *
 
 
 # class WordBagMakerTest(unittest.TestCase):

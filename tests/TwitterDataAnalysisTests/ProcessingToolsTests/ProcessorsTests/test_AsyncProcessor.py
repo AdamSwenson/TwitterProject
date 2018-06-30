@@ -5,7 +5,7 @@ __author__ = 'adam'
 
 import unittest
 
-# sys.path.append( '%s/TextTools/TextProcessors' % environment.BASE )  # the directory that contains my_pkg
+# sys.path.append( '%s/TextProcessingTools/TextProcessors' % environment.BASE )  # the directory that contains my_pkg
 
 from tests.helpers.DataAndFunctionsForTesting import *
 from tests.helpers.Factories import *
@@ -14,9 +14,9 @@ from ProcessingTools.Processors.UserProcessing import Processor
 from TwitterDatabase.Models.DataStructures import Result
 
 # from ServerTools.ClientSide import ServerQueueDropin
-from TextTools.TextTools.Filtration.Filters import URLFilter, UsernameFilter, PunctuationFilter, NumeralFilter, StopwordFilter
-from TextTools.TextTools.Replacement.Modifiers import WierdBPrefixConverter, CaseConverter
-from TextTools.TextTools.Processors.SingleWordProcessors import SingleWordProcessor
+from TextProcessingTools.TextTools.Filtration.Filters import URLFilter, UsernameFilter, PunctuationFilter, NumeralFilter, StopwordFilter
+from TextProcessingTools.TextTools.Replacement.Modifiers import WierdBPrefixConverter, CaseConverter
+from TextProcessingTools.TextTools.Processors.SingleWordProcessors import SingleWordProcessor
 
 
 class AsyncProcessorUnitTests( unittest.TestCase ):

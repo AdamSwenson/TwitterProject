@@ -2,13 +2,13 @@ import unittest
 
 from faker import Faker
 
-import TextTools.TextTools.Replacement.Interfaces
-from TextTools.TextTools.Filtration import Filters
-from TextTools.TextTools.Replacement import Modifiers
-import TextTools.TextTools.Processors.ParagraphProcessors
-import TextTools.TextTools.Processors.SingleWordProcessors
-from  TextTools.TextTools.Replacement.Interfaces import IModifier
-from TextTools.TextTools.Processors.Exceptions import ExcludedString
+import TextProcessingTools.TextTools.Replacement.Interfaces
+from TextProcessingTools.TextTools.Filtration import Filters
+from TextProcessingTools.TextTools.Replacement import Modifiers
+import TextProcessingTools.TextTools.Processors.ParagraphProcessors
+import TextProcessingTools.TextTools.Processors.SingleWordProcessors
+from  TextProcessingTools.TextTools.Replacement.Interfaces import IModifier
+from TextProcessingTools.TextTools.Processors.Exceptions import ExcludedString
 
 
 fake = Faker()
@@ -16,7 +16,7 @@ fake = Faker()
 
 class SingleWordProcessorTests(unittest.TestCase):
     def setUp(self):
-        self.obj = TextTools.TextTools.Processors.SingleWordProcessors.SingleWordProcessor()
+        self.obj = TextProcessingTools.TextTools.Processors.SingleWordProcessors.SingleWordProcessor()
         self.faker = Faker()
 
     def test_happy_process(self):
@@ -83,7 +83,7 @@ class SingleWordProcessorTests(unittest.TestCase):
 
 class ParagraphProcesorTests(unittest.TestCase):
     def setUp(self):
-        self.object = TextTools.TextTools.Processors.ParagraphProcessors.ParagraphProcessor()
+        self.object = TextProcessingTools.TextTools.Processors.ParagraphProcessors.ParagraphProcessor()
 
     def test_process_default(self):
         test = fake.text()

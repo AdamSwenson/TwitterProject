@@ -2,7 +2,7 @@
 #
 # from ConstantsAndUtilities import *
 #
-# sys.path.append('%s/TextTools/TextProcessors' % BASE)  # the directory that contains my_pkg
+# sys.path.append('%s/TextProcessingTools/TextProcessors' % BASE)  # the directory that contains my_pkg
 #
 # from deprecated.ProcessingControllers import *
 #

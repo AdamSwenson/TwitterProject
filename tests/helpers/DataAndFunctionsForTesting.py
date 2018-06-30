@@ -1,7 +1,7 @@
 """
 Created by adam on 11/6/16
 """
-import TextTools.TextTools.Processors.SingleWordProcessors
+import TextProcessingTools.TextTools.Processors.SingleWordProcessors
 import Models.TweetORM as TweetORM
 from TwitterDatabase.Models.DataStructures import Result
 
@@ -75,7 +75,7 @@ def initialize_processor( ):
     merge = ConstantsAndUtilities.Merge()
 
     """Initialize the tools for filtering and modifying the individual tweet words"""
-    processor = TextTools.Processors.SingleWordProcessors.SingleWordProcessor()
+    processor = TextProcessingTools.Processors.SingleWordProcessors.SingleWordProcessor()
 
     ignoreListFilter = TextProcessors.Filters.IgnoreListFilter( )
     ignoreListFilter.add_to_ignorelist( ignore.get_list( ) )

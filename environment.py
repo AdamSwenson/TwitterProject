@@ -60,7 +60,7 @@ PROJ_BASE = "%s/TwitterProject" % BASE
 ANALYSIS_PATH = "%s/DataAnalysis" % PROJ_BASE
 COMMON_TOOLS_PATH = "%s/CommonTools" % PROJ_BASE
 SERVER_PATH = "%s/TwitterDatabase" % PROJ_BASE
-TEXT_TOOLS_PATH = "%s/TextTools" % PROJ_BASE
+TEXT_TOOLS_PATH = "%s/TextProcessingTools" % PROJ_BASE
 MINING_PATH = "%s/Mining" % PROJ_BASE
 UNIT_TESTS_PATH = "%s/tests" % PROJ_BASE
 

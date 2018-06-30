@@ -17,7 +17,7 @@ import environment
 from tornado import gen
 
 import Models.TweetORM as TweetORM
-import TextTools.Processors.Parents.IProcessor
+import TextProcessingTools.Processors.Parents.IProcessor
 
 from DataTools import make_tweet_result, make_user_result
 from ProcessingTools.Queues.Interfaces import IQueueHandler
@@ -52,11 +52,11 @@ class IProcessingController( ResponseStoreMixin ):
         self.word_tokenizer = Tokenizers.WordTokenizer()
         super().__init__()
 
-    def load_word_processor( self, processor: TextTools.Processors.Parents.IProcessor ):
+    def load_word_processor( self, processor: TextProcessingTools.Processors.Parents.IProcessor ):
         """
         Add something which acts on individual words
          to the stack that will run on each word from the tweet
-         :type processor: TextTools.Processors.Parents.IProcessor
+         :type processor: TextProcessingTools.Processors.Parents.IProcessor
          """
         self._word_processors.append( processor )
         self._word_processors = list( set( self._word_processors ) )

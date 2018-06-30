@@ -1,7 +1,7 @@
 import unittest
 import nltk
 
-from TextTools.TextTools.Replacement import Modifiers as M
+from TextProcessingTools.TextTools.Replacement import Modifiers as M
 
 
 class CaseConverterTest( unittest.TestCase ):

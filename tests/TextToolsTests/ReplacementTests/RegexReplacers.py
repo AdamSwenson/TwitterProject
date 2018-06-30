@@ -1,6 +1,6 @@
 import unittest
 
-from TextTools.Replacement import RegexReplacers
+from TextProcessingTools.Replacement import RegexReplacers
 
 
 class RegexReplacersText( unittest.TestCase ):

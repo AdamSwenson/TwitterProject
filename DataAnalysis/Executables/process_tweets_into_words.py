@@ -18,9 +18,9 @@ async def run(future):
     from ProcessingTools.Processors.TweetProcessing import Processor
     from ProcessingTools.Queues.AsyncQueues import AsyncServerQueueDropin
 
-    from TextTools.TextTools.Filtration.Filters import URLFilter, UsernameFilter, PunctuationFilter, NumeralFilter
-    from TextTools.TextTools.Replacement.Modifiers import WierdBPrefixConverter, CaseConverter
-    from TextTools.TextTools.Processors.SingleWordProcessors import SingleWordProcessor
+    from TextProcessingTools.TextTools.Filtration.Filters import URLFilter, UsernameFilter, PunctuationFilter, NumeralFilter
+    from TextProcessingTools.TextTools.Replacement.Modifiers import WierdBPrefixConverter, CaseConverter
+    from TextProcessingTools.TextTools.Processors.SingleWordProcessors import SingleWordProcessor
 
     filters = [
         UsernameFilter(),

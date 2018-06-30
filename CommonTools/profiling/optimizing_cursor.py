@@ -1,7 +1,7 @@
 """
 Created by adam on 12/15/16
 """
-import TextTools.Processors.SingleWordProcessors
+import TextProcessingTools.Processors.SingleWordProcessors
 
 __author__ = 'adam'
 
@@ -12,7 +12,7 @@ import ConstantsAndUtilities
 
 # Initialize the tools for filtering and modifying the individual tweet words
 import TextProcessors.Processors
-from TextTools.Replacement.Modifiers import *
+from TextProcessingTools.Replacement.Modifiers import *
 
 from deprecated import Listeners, Workers
 import Queues.QueueTools as QT
@@ -27,7 +27,7 @@ if __name__ == '__main__':
     threads = []
     cursor = DataTools.Cursors.TweetCursor()
 
-    word_processor = TextTools.Processors.SingleWordProcessors.SingleWordProcessor()
+    word_processor = TextProcessingTools.Processors.SingleWordProcessors.SingleWordProcessor()
     ignore = ConstantsAndUtilities.Ignore()
     ignore._construct( )
     merge = ConstantsAndUtilities.Merge()

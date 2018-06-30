@@ -4,7 +4,7 @@ so that we may benchmark their performance
 
 Created by adam on 12/15/16
 """
-import TextTools.Processors.SingleWordProcessors
+import TextProcessingTools.Processors.SingleWordProcessors
 
 __author__ = 'adam'
 # %cd /Users/adam/Dropbox/TwitterProject/DataAnalysis
@@ -22,8 +22,8 @@ from OptimizationTools import *
 
 # Initialize the tools for filtering and modifying the individual tweet words
 import TextProcessors.Processors
-from TextTools.Replacement.Modifiers import *
-import TextTools.Filtration.Filters as Filters
+from TextProcessingTools.Replacement.Modifiers import *
+import TextProcessingTools.Filtration.Filters as Filters
 from deprecated import Listeners, Workers
 import Queues.QueueTools as QT
 
@@ -65,7 +65,7 @@ def run_tweet_processing_benchmarking_test(results_file, RUNS, MAX_THREADS, STAR
     """
 
     # Initialize the tools for filtering and modifying the individual tweet words
-    word_processor = TextTools.Processors.SingleWordProcessors.SingleWordProcessor()
+    word_processor = TextProcessingTools.Processors.SingleWordProcessors.SingleWordProcessor()
     ignore = ConstantsAndUtilities.Ignore()
     ignore._construct()
     merge = ConstantsAndUtilities.Merge()

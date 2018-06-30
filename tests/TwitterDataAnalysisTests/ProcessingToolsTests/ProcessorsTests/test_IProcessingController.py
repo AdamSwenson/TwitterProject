@@ -5,7 +5,7 @@
 # from TestingTools.DataAndFunctionsForTesting import *
 # from TestingTools.Factories import DummyQueueFactory, UserFactory
 #
-# # sys.path.append('%s/TextTools/TextProcessors' % BASE)  # the directory that contains my_pkg
+# # sys.path.append('%s/TextProcessingTools/TextProcessors' % BASE)  # the directory that contains my_pkg
 #
 #
 # class IProcessingControllerUnitTests(unittest.TestCase):
