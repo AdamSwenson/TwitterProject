@@ -15,6 +15,9 @@ class DBInfoHandler( IRequestHandler ):
         with self.make_session() as session:
             query = session.query( Tweets ).order_by( Tweets.tweetID )
             result = query.first()
-            print( result.tweetID )
-            pl = encode_payload( { 'max_tweet_id': result.tweetID })
+            try:
+                print( result.tweetID )
+                pl = encode_payload( { 'max_tweet_id': result.tweetID })
+            except AttributeError:
+                pl = encode_payload( { 'max_tweet_id': None })
             self.write( pl )
