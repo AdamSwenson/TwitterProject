@@ -7,7 +7,7 @@
 #
 #
 # from tests.helpers.Factories import *
-# import TwitterDataAnalysis.DataTools.WordORM as WordORM
+# import DataAnalysis.DataTools.WordORM as WordORM
 #
 #
 # class UserFactoryTests(unittest.TestCase):

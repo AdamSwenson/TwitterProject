@@ -4,7 +4,7 @@ import unittest
 
 # import sqlalchemy
 #
-# from TwitterDataAnalysis.DataTools import TweetORM
+# from DataAnalysis.DataTools import TweetORM
 #
 #
 # class ConnectionMock( TweetORM.Connection ):

@@ -13,7 +13,7 @@ from tornado.simple_httpclient import SimpleAsyncHTTPClient
 import environment as env
 
 from Server.ServerTools.Routes import DB_INFO_ROUTE
-from TwitterDataAnalysis.ProcessingTools.Mixins import ProcessIdHaver
+from DataAnalysis.ProcessingTools.Mixins import ProcessIdHaver
 from Server.ServerTools import Helpers
 
 # instrumenting to determine if running async

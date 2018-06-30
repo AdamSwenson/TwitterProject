@@ -1,6 +1,6 @@
 # import unittest
 #
-# from TwitterDataAnalysis.ProcessingTools.Processors.UserProcessing import U
+# from DataAnalysis.ProcessingTools.Processors.UserProcessing import U
 # from tests.helpers.DataAndFunctionsForTesting import *
 # from tests.helpers.Factories import *
 #

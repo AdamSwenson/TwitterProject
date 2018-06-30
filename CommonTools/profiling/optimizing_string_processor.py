@@ -7,7 +7,7 @@ Created by adam on 12/15/16
 import TextTools.Processors.SingleWordProcessors
 
 __author__ = 'adam'
-# %cd /Users/adam/Dropbox/TwitterProject/TwitterDataAnalysis
+# %cd /Users/adam/Dropbox/TwitterProject/DataAnalysis
 # %bookmark twitteranalysis
 
 from environment import *

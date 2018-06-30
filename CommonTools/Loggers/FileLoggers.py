@@ -11,7 +11,7 @@ from CommonTools.Loggers.ILogger import ILogger
 
 BASE = os.getenv("HOME")
 # todo restore environment
-# from TwitterDataAnalysis.environment import *
+# from DataAnalysis.environment import *
 
 # Logging
 LOG_FOLDER_PATH = "%s/Desktop/TwitterDataAnalysisLogs" % BASE

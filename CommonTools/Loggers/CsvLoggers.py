@@ -11,7 +11,7 @@ import csv
 
 # BASE = os.getenv( "HOME" )
 # todo restore environment
-# from TwitterDataAnalysis.environment import *
+# from DataAnalysis.environment import *
 
 import environment
 

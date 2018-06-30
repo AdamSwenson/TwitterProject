@@ -2,7 +2,7 @@ import unittest
 import aiounittest
 import asyncio
 
-from TwitterDataAnalysis.ProcessingTools.Queues.QueueTools import SaveQueueHandler
+from DataAnalysis.ProcessingTools.Queues.QueueTools import SaveQueueHandler
 from tests.helpers.Factories import DummyIListenerFactory
 
 class SaveQueueHandlerTests(unittest.TestCase ):

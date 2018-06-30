@@ -57,7 +57,7 @@ BASE = '%s/Dropbox/PainNarrativesLab' % ROOT
 
 # Project folder paths
 PROJ_BASE = "%s/TwitterProject" % BASE
-ANALYSIS_PATH = "%s/TwitterDataAnalysis" % PROJ_BASE
+ANALYSIS_PATH = "%s/DataAnalysis" % PROJ_BASE
 COMMON_TOOLS_PATH = "%s/CommonTools" % PROJ_BASE
 SERVER_PATH = "%s/TwitterDatabase" % PROJ_BASE
 TEXT_TOOLS_PATH = "%s/TextTools" % PROJ_BASE
@@ -91,7 +91,7 @@ else:
 
 # Data and experiments
 EXPERIMENTS_FOLDER = BASE + '/Experiments'
-MAPPING_PATH = "%s/TwitterDataAnalysis/mappings" % PROJ_BASE
+MAPPING_PATH = "%s/DataAnalysis/mappings" % PROJ_BASE
 
 # Logging folder paths
 LOG_FOLDER_PATH = "%s/Desktop/TwitterDataAnalysisLogs" % ROOT

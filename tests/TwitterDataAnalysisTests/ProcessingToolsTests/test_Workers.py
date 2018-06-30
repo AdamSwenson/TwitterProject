@@ -1,10 +1,10 @@
 # import unittest
 # import environment
 #
-# import TwitterDataAnalysis.ProcessingTools.Queues.Interfaces
+# import DataAnalysis.ProcessingTools.Queues.Interfaces
 # from deprecated.Workers import *
-# import TwitterDataAnalysis.DataTools.TweetORM as TweeORM
-# from TwitterDataAnalysis.DataTools import Cursors
+# import DataAnalysis.DataTools.TweetORM as TweeORM
+# from DataAnalysis.DataTools import Cursors
 # from threading import Thread
 #
 #

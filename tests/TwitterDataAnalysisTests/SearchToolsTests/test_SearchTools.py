@@ -1,6 +1,6 @@
 import unittest
 
-from TwitterDataAnalysis.SearchTools.SearchTools import isRetweet
+from DataAnalysis.SearchTools.SearchTools import isRetweet
 
 
 class FunctionTests( unittest.TestCase ):
