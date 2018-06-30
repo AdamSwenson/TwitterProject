@@ -87,6 +87,35 @@ class Tweet(Tweets):
         super().__init__( **kwargs)
 
 
+def _make_defined_data(data, defined_keys):
+    """Takes the incoming tweet data and pulls out
+    all of the items which go into fields of the
+    db and puts the rest into a json string under other_data
+    """
+    # This will be the data that goes directly into the model
+    defined_data = {}
+    # This will be the data that goes into the other_data field
+    forJson = { }
+
+    for k in data.keys():
+        datum = data[k]
+        # check whether it is a dict and encode, if necessary
+        if type(datum) == dict:
+            datum = json.dumps(datum)
+
+        if k in defined_keys:
+            defined_data[k] = datum
+
+        else:
+            forJson[k] = datum
+
+    # Set the data that didn't have a field
+    # to the json field
+    defined_data['other_data'] = json.dumps(forJson)
+
+    return defined_data
+
+
 def TweetFactory( data: dict ):
     """This consumes a dictionary of data and returns a
     Tweet object. If the dictionary contains keys which do not
@@ -121,35 +150,6 @@ class User(Users):
     """Better named alias"""
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
-
-def _make_defined_data(data, defined_keys):
-    """Takes the incoming tweet data and pulls out
-    all of the items which go into fields of the
-    db and puts the rest into a json string under other_data
-    """
-    # This will be the data that goes directly into the model
-    defined_data = {}
-    # This will be the data that goes into the other_data field
-    forJson = { }
-
-    for k in data.keys():
-        datum = data[k]
-        # check whether it is a dict and encode, if necessary
-        if type(datum) == dict:
-            datum = json.dumps(datum)
-
-        if k in defined_keys:
-            defined_data[k] = datum
-
-        else:
-            forJson[k] = datum
-
-    # Set the data that didn't have a field
-    # to the json field
-    defined_data['other_data'] = json.dumps(forJson)
-
-    return defined_data
 
 
 def UserFactory( data: dict ):

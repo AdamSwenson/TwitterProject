@@ -23,8 +23,8 @@ def initialize_engine( conn=environment.ENGINE ):
     if conn is not None:
         method = { 'sqlite': create_sqlite_engine,
                    'sqlite-file': _create_sqlite_file_engine,
-                   'mysql': _create_mysql_engine,
-                   'mysql_test': _create_mysql_test_engine
+                   # 'mysql': _create_mysql_engine,
+                   # 'mysql_test': _create_mysql_test_engine
                    }.get( conn )
 
         engine = method()
@@ -102,17 +102,17 @@ def session_scope( engine=None ):
             session.close()
 
 
-def _create_mysql_engine():
-    print( "creating connection: mysql %s" % DB)
-    return create_engine( 'mysql+mysqlconnector://root:''@localhost:3306/%s' % DB )
-
-
-def _create_mysql_test_engine():
-    print( "creating connection: mysql %s" % DB )
-    if DB is 'twitter_wordsTEST':
-        print( "creating connection: mysql twitter_wordsTEST " )
-        return create_engine( 'mysql+mysqlconnector://root:''@localhost:3306/twitter_wordsTEST' )
-
-    return create_engine( "mysql+mysqlconnector://root:''@localhost:3306/%s" % DB )
-
+# def _create_mysql_engine():
+#     print( "creating connection: mysql %s" % environment.DB)
+#     return create_engine( 'mysql+mysqlconnector://root:''@localhost:3306/%s' % DB )
+#
+#
+# def _create_mysql_test_engine():
+#     print( "creating connection: mysql %s" % DB )
+#     if DB is 'twitter_wordsTEST':
+#         print( "creating connection: mysql twitter_wordsTEST " )
+#         return create_engine( 'mysql+mysqlconnector://root:''@localhost:3306/twitter_wordsTEST' )
+#
+#     return create_engine( "mysql+mysqlconnector://root:''@localhost:3306/%s" % DB )
+#
     # return create_engine("mysql+mysqlconnector://root:@localhost/)

@@ -66,11 +66,20 @@ sys.path.append(UNIT_TESTS_PATH)
 
 
 ########### Credentials
-
-# CredentialLoader
-CREDENTIAL_FILE = '%s/private_credentials/sql_local_credentials.xml' % BASE
 SLACK_CREDENTIAL_FILE = "%s/private_credentials/slack-credentials.xml" % BASE
 TWITTER_CREDENTIAL_FILE = "%s/private_credentials/twittercredentials2.xml" % BASE
+
+# MySql credentials
+# CredentialLoader
+CREDENTIAL_FILE = '%s/private_credentials/sql_miner_laptop_credentials.xml' % BASE
+
+TEST_CREDENTIALS_FILE = '%s/tests/helpers/sql_local_testing_credentials.xml' % PROJ_BASE
+
+# if TEST:
+#     CREDENTIAL_FILE = TEST_CREDENTIALS_FILE
+# else:
+#     CREDENTIAL_FILE = '%s/private_credentials/sql_local_credentials.xml' % BASE
+
 
 # Data and experiments
 EXPERIMENTS_FOLDER = BASE + '/Experiments'
@@ -159,7 +168,3 @@ QUERY_TIME_LOG = '%s/QUERY_TIME_LOG.csv' % LOG_FOLDER_PATH
 # this gets written to regardless of whether TIME_LOGGING is True
 RUN_TIME_LOG = '%s/%s-processing-run-time-log.csv' % (LOG_FOLDER_PATH, ITEM_TYPE)
 
-
-
-################################### Testing ###########################
-TEST_CREDENTIALS_FILE = '%s/tests/helpers/sql_test_credentials.xml' % PROJ_BASE

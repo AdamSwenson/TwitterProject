@@ -67,8 +67,8 @@ class Connection( object ):
             if self._port is not None:
                 self._port = int( self._port )
             self._username = credentials.find( 'db_user' )
-            self._db_name = environment.DB
-            # self._db_name = credentials.find( 'db_name' ).text
+            # self._db_name = environment.DB
+            self._db_name = credentials.find( 'db_name' )
             self._password = credentials.find( 'db_password' )
 
     def _make_engine( self ):
@@ -88,11 +88,15 @@ class MySqlConnection( Connection ):
         super( __class__, self ).__init__( credential_file , create_engine)
 
     def make_dsn( self ):
+        """Creates the database connection url for the mysql database. It sets the
+        value internally but also returns it so that it can be used independently
+        """
         if self._port:
             server = "%s:%s" % (self._server, self._port)
         else:
             server = self._server
             self._dsn = "mysql%s://%s:%s@%s/%s" % (self._driver, self._username, self._password, server, self._db_name)
+            print(self._dsn)
             return self._dsn
 
     def _make_engine( self ):
