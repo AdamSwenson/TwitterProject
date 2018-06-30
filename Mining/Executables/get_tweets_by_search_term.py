@@ -33,9 +33,12 @@ async def run(  ):
     # create the object which will execute searches
     searcher = TweetsGetter( connection )
 
-    result = await c.get_max_tweet_id()
-    r = decode_payload(result.body)
-    maxId = r['max_tweet_id']
+    try:
+        result = await c.get_max_tweet_id()
+        r = decode_payload(result.body)
+        maxId = r['max_tweet_id']
+    except AttributeError:
+        maxId = None
 
     # load ids to retrieve from file
     searchTerms = CsvFileTools.read_list( search_terms_file )
