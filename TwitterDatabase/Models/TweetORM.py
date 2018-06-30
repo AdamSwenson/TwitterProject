@@ -6,7 +6,9 @@ In the process of being converted to use sqlalchemy
 from sqlalchemy import Table, Column, ForeignKey, Integer, String, JSON
 from sqlalchemy.ext.declarative import declarative_base
 
-import DatabaseAccessObjects.EngineMakers
+from sqlalchemy import inspect
+
+# import DatabaseAccessObjects.EngineMakers
 # from DatabaseAccessObjects import DataConnections
 import json
 # connecting to db
@@ -14,7 +16,6 @@ import json
 # Base class that maintains the catalog of tables and classes in db
 Base = declarative_base()
 
-from sqlalchemy import inspect
 
 class Hashtags(Base):
     __tablename__ = 'hashtags'
@@ -207,12 +208,12 @@ tweetsXtags = Table('tweetsXtags', Base.metadata,
                     )
 
 
-def create_db_tables(seed=False):
+def create_db_tables(engine, seed=False):
     """Creates tables in the database
     Create all tables in the engine.
     This is equivalent to "Create Table" statements in raw SQL.
-    """
-    engine = DatabaseAccessObjects.EngineMakers.initialize_engine()
+    # """
+    # engine = DatabaseAccessObjects.EngineMakers.initialize_engine()
     # create the tables
     Base.metadata.create_all(engine)
     # metadata = MetaData( )

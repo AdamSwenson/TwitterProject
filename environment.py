@@ -41,6 +41,15 @@ DB_QUEUE_SIZE = 1000
 CLIENT_QUEUE_SIZE = 700
 
 
+################################# Database ############################
+# Database server url
+DB_PORT = 8691
+DB_URL = "http://127.0.0.1:%s" % DB_PORT
+
+# ENGINE = 'mysql_test'
+# ENGINE = 'sqlite'
+ENGINE = 'sqlite-file'
+
 
 ############################## Locations of code ###############
 ROOT = os.getenv( "HOME" )
@@ -71,14 +80,13 @@ TWITTER_CREDENTIAL_FILE = "%s/private_credentials/twittercredentials2.xml" % BAS
 
 # MySql credentials
 # CredentialLoader
-CREDENTIAL_FILE = '%s/private_credentials/sql_miner_laptop_credentials.xml' % BASE
 
 TEST_CREDENTIALS_FILE = '%s/tests/helpers/sql_local_testing_credentials.xml' % PROJ_BASE
 
-# if TEST:
-#     CREDENTIAL_FILE = TEST_CREDENTIALS_FILE
-# else:
-#     CREDENTIAL_FILE = '%s/private_credentials/sql_local_credentials.xml' % BASE
+if TEST:
+    CREDENTIAL_FILE = TEST_CREDENTIALS_FILE
+else:
+    CREDENTIAL_FILE = '%s/private_credentials/sql_local_credentials.xml' % BASE
 
 
 # Data and experiments
@@ -90,17 +98,6 @@ LOG_FOLDER_PATH = "%s/Desktop/TwitterDataAnalysisLogs" % ROOT
 PROFILING_LOG_FOLDER_PATH = "%s/profiling" % LOG_FOLDER_PATH
 INTEGRITY_LOG_FOLDER_PATH = "%s/integrity" % LOG_FOLDER_PATH
 
-
-# sys.path.append( "%s/DataTools" % PROJ_BASE )
-# sys.path.append( "%s/Executables" % PROJ_BASE )
-# sys.path.append( "%s/Loggers" % PROJ_BASE )
-# sys.path.append( '%s/TextTools/TextProcessors' % BASE )
-# sys.path.append( "%s/ProcessingTools" % PROJ_BASE )
-# sys.path.append( "%s/profiling" % PROJ_BASE )
-# sys.path.append( '%s/ServerTools' % BASE )
-#
-# # the directory that contains various common custom classes
-# sys.path.append( '%s/Dropbox/iPythonFiles/BaseClasses' % ROOT )
 
 ####################### DB files ##################################
 # sqlite db files
@@ -121,27 +118,18 @@ ID_MAP_DB = '%s/id-map.db' % DATA_FOLDER
 MAX_DB_FILES = 10  # the maximum number of db files to create.
 
 
-################################# Database ############################
-# Database server url
-DB_PORT = 8691
-DB_URL = "http://127.0.0.1:%s" % DB_PORT
-
-# ENGINE = 'mysql_test'
-# ENGINE = 'sqlite'
-ENGINE = 'sqlite-file'
-
-# The name of the database to connect to
-if TEST:
-    DB = 'twitter_dataTEST' if ITEM_TYPE == 'user' else 'twitter_dataTEST'
-else:
-    DB = 'twitter_data' if ITEM_TYPE == 'tweet' else 'twitter_data'
+# # The name of the database to connect to
+# if TEST:
+#     DB = 'twitter_dataTEST' if ITEM_TYPE == 'user' else 'twitter_dataTEST'
+# else:
+#     DB = 'twitter_data' if ITEM_TYPE == 'tweet' else 'twitter_data'
 
 
 # Sometimes things go wrong in develoment and
 # a transaction will get stuck. This flag gets picked
 # up at the head of DataRespositories and calls session.rollback()
-PLEASE_ROLLBACK = False
-PRINT_STEPS = False
+# PLEASE_ROLLBACK = False
+# PRINT_STEPS = False
 
 ####################### Logging #################################
 
