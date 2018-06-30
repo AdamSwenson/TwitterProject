@@ -1,5 +1,5 @@
 from Loggers.SearchLoggers import SearchLogger
-from TwitterMining.Miner.TwitterSearchTools import *
+from Mining.Miner.TwitterSearchTools import *
 from tests.helpers.DaoMocks import *
 from tests.helpers.TwitterMocks import *
 from tests.helpers.ObserverMocks import *

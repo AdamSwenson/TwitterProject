@@ -1,6 +1,6 @@
 __author__ = 'adam'
 
-from TwitterMining.Miner.ObserverAndSubscribers import ISearchObserver
+from Mining.Miner.ObserverAndSubscribers import ISearchObserver
 
 
 class ISearchObserverMock(ISearchObserver):

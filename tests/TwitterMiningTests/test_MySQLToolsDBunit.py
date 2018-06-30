@@ -7,9 +7,9 @@ import unittest
 from tests.helpers.SQLUnitTestingTools import *
 
 #from DaoMocks import *
-from TwitterMining.DatabaseTools.MySQLTools import *
-# from TwitterMining.DatabaseAccessObjects.SqlCredentials import TestingCredentialLoader
-from TwitterMining.SearchResultsProcessing.TweetResults import *
+from Mining.DatabaseTools.MySQLTools import *
+# from Mining.DatabaseAccessObjects.SqlCredentials import TestingCredentialLoader
+from Mining.SearchResultsProcessing.TweetResults import *
 
 
 class HashtagServiceTest(unittest.TestCase):

@@ -61,7 +61,7 @@ ANALYSIS_PATH = "%s/TwitterDataAnalysis" % PROJ_BASE
 COMMON_TOOLS_PATH = "%s/CommonTools" % PROJ_BASE
 SERVER_PATH = "%s/TwitterDatabase" % PROJ_BASE
 TEXT_TOOLS_PATH = "%s/TextTools" % PROJ_BASE
-MINING_PATH = "%s/TwitterMining" % PROJ_BASE
+MINING_PATH = "%s/Mining" % PROJ_BASE
 UNIT_TESTS_PATH = "%s/tests" % PROJ_BASE
 
 # add everyone to path explicitly

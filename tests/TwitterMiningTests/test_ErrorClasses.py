@@ -1,7 +1,7 @@
 __author__ = 'adam'
 
 import unittest
-from TwitterMining.Exceptions.MiningErrorClasses import *
+from Mining.Exceptions.MiningErrorClasses import *
 
 
 class TweetErrorTest(unittest.TestCase):
