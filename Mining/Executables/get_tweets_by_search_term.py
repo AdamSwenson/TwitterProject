@@ -15,11 +15,13 @@ from Mining.Miner.TwitterLogin import TwitterConnection
 from Mining.TwitterQueryMakers.TwitterQueries import TweetsGetter
 from Server.ServerTools.Helpers import convert_object_into_dict, decode_payload
 
+from progress.spinner import MoonSpinner
 
 search_terms_file = "%s/tweet-search-terms.csv" % env.EXPERIMENTS_FOLDER
 
 async def run(  ):
     received_count = 0
+    spinner = MoonSpinner()
 
     # Set up the machinery for saving the
     # processed results
@@ -52,7 +54,8 @@ async def run(  ):
             # send the results to the server to be saved
             await c.send(results)
             received_count += len(results)
-            print(received_count)
+            spinner.next()
+            # print(received_count)
     except Exception as e:
         print(e)
         await c.async_send_flush_command()

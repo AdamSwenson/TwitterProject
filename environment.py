@@ -37,7 +37,10 @@ SLACK_HEARTBEAT_LIMIT = 1000000
 ############################## Queues ###############################
 # How many transactions to queue before
 # flushing / committing
-DB_QUEUE_SIZE = 1000
+# For data processing, this should be pretty high (e.g., 10000)
+# For twitter searching, the value should be pretty low (e.g, 10)
+DB_QUEUE_SIZE = 10
+# This isn't used by the mining functions
 CLIENT_QUEUE_SIZE = 700
 
 
