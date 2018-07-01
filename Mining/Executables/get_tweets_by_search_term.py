@@ -57,8 +57,8 @@ async def run(  ):
             await c.send(results)
             received_count += len(results)
             spinner.next()
-            if received_count % 10 == 0:
-                print(received_count)
+            if received_count % 100 == 0:
+                print("                             %s  " % received_count)
     except Exception as e:
         print(e)
         await c.async_send_flush_command()
