@@ -73,7 +73,9 @@ class TweetSaveHandler( IRequestHandler ):
         except DBExceptions as e:
             print( 'db error: %s' % e.message )
             # self.logger.log_error('db error: %s' % e.message)
-            self.write( "error" )
+
+            # no need for the client to know
+            self.write( "success" )
 
 
 if __name__ == '__main__':
