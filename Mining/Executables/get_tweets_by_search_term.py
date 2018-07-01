@@ -19,9 +19,11 @@ from progress.spinner import MoonSpinner
 
 search_terms_file = "%s/tweet-search-terms.csv" % env.EXPERIMENTS_FOLDER
 
+spinner = MoonSpinner()
+
 async def run(  ):
     received_count = 0
-    spinner = MoonSpinner()
+
 
     # Set up the machinery for saving the
     # processed results
@@ -55,7 +57,8 @@ async def run(  ):
             await c.send(results)
             received_count += len(results)
             spinner.next()
-            # print(received_count)
+            if received_count % 10 == 0:
+                print(received_count)
     except Exception as e:
         print(e)
         await c.async_send_flush_command()
