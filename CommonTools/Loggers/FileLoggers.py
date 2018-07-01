@@ -19,16 +19,23 @@ LOG_FOLDER_PATH = "%s/Desktop/TwitterDataAnalysisLogs" % BASE
 DEFAULT_LOG_FILE_NAME = 'twitter_log.txt'
 DEFAULT_LOG_FILE_PATH = "%s/%s" % (LOG_FOLDER_PATH, DEFAULT_LOG_FILE_NAME)
 
-log_handler = FileHandler(DEFAULT_LOG_FILE_PATH)
-log_handler.push_application()
-
 
 class FileWritingLogger(ILogger):
 
-    def __init__(self, **kwargs):
-        """ kwargs may contain: name """
+    def __init__(self,  **kwargs):
+        """ kwargs may contain: name, log_path """
         self.name = 'Default'
+
         self._process_kwargs(kwargs)
+
+        if hasattr(self, 'log_path') is False:
+            self.log_path = DEFAULT_LOG_FILE_PATH
+
+        print("%s Logging to: %s" % (self.name, self.log_path))
+
+        log_handler = FileHandler(self.log_path)
+        log_handler.push_application()
+
         super().__init__()
 
     def add_break( self ):

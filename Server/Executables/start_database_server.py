@@ -13,6 +13,8 @@ import tornado
 
 import environment
 from Server.RequestHandlers.WordMapHandlers import WordMapHandler
+from Server.RequestHandlers.TweetSaveHandlers import TweetSaveHandler
+from Server.RequestHandlers.UserSaveHandlers import UserSaveHandler
 from Server.ServerTools.Routes import route_handlers
 from Server.ServerTools.ServerExceptions import ShutdownCommanded
 
@@ -65,7 +67,8 @@ def main():
         # print("%s still in queue" % len(WordMapHandler.results))
         # WordMapHandler.save_queued()
         # print("%s in queue after flush" % len(WordMapHandler.results))
-        print( "%s requests received" % WordMapHandler._requestCount )
+        num = TweetSaveHandler._requestCount + WordMapHandler._requestCount + UserSaveHandler._requestCount
+        print( "%s requests received" % num)
 
     finally:
         # WordMapHandler.save_queued()

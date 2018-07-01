@@ -141,7 +141,7 @@ def TweetFactory( data: dict ):
     # the incoming data
     defined_data['tweetID'] = int(data['id_str'])
     defined_data['userID'] = int(data['user']['id_str'])
-    defined_data['tweetText'] = data['text']
+    defined_data['tweetText'] = data['text'].encode('unicode_escape')
 
     # create a new instance with the data
     return Tweet(**defined_data)

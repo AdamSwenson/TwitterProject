@@ -10,20 +10,32 @@ import asyncio
 from collections.__init__ import deque
 from progress.spinner import MoonSpinner
 from tornado import gen, locks
-
-from Profiling.OptimizingTools import timestamp_writer
+from CommonTools.Loggers.FileLoggers import FileWritingLogger
+from CommonTools.FileTools.CsvFileTools import write_csv
+from Profiling.OptimizingTools import timestamp_writer, standard_timestamp
 
 lock = locks.Lock()
 from tornado_sqlalchemy import SessionMixin, as_future
 
 import environment
 
+logpath = "%s/mining/twitter-utf-fuckup.txt" % environment.LOG_FOLDER_PATH
+csvlog = "%s/mining/twitter-save-data.csv" % environment.LOG_FOLDER_PATH
+Logger = FileWritingLogger(log_path=logpath, name='OrmSaveQueue')
 
 class OrmSaveQueue:
     spinner = MoonSpinner()
 
     def __init__( self, batch_size=environment.DB_QUEUE_SIZE ):
+        # number of times save is called
         self._queryCount = 0
+        # number of items actually saved
+        self._saveCount = 0
+        # number of items attempted to save
+        self._saveAttemptCount = 0
+        # number invalid tweets
+        self._invalidCount = 0
+
         self.batch_size = batch_size
         self.store = deque()
 
@@ -34,7 +46,7 @@ class OrmSaveQueue:
         self._queryCount += 1
 
     @gen.coroutine
-    def enque( self, modelList: list, session=None ):  # : asyncio.Future ):
+    def enque( self, modelList: list, session=None ):
         """
         Push a list of users into the queue for saving to
         the db. Once the batch size has been reached,
@@ -47,7 +59,6 @@ class OrmSaveQueue:
             # Push the model objects into the queue
             # we need to use the lock so that no other
             # instance gets in the way
-            # async with lock:
             [ self.store.append( r ) for r in modelList ]
 
         # if we've reached the batch size, we save them to the db
@@ -65,11 +76,35 @@ class OrmSaveQueue:
             b = [ self.store.pop() for _ in range( 0, len(self.store) ) ]
 
             for o in b:
+                self._saveAttemptCount += 1
                 try:
                     session.add(o)
                     session.commit()
-                except sqlalchemy.exc.IntegrityError as e:
+                    self._saveCount += 1
+                except sqlalchemy.exc.IntegrityError:
                     session.rollback()
+                except sqlalchemy.exc.DatabaseError:
+                    self._invalidCount += 1
+                    session.rollback()
+                except sqlalchemy.orm.exc.FlushError:
+                    self._invalidCount += 1
+                    session.rollback()
+
+            self.record_stats()
+
+    def record_stats( self ):
+        save_rate = self._saveCount / self._saveAttemptCount
+
+        r = [standard_timestamp(), self._saveAttemptCount, self._saveCount, save_rate, self._invalidCount]
+        write_csv(csvlog, r)
+
+        Logger.log(" ------------ ---------------- ------------ " )
+        Logger.log("Save attempt count %s" % self._saveAttemptCount)
+        Logger.log("Save success count %s" % self._saveCount)
+        Logger.log("Save rate          %s" % save_rate)
+        Logger.log("Invalid tweets     %s" % self._invalidCount)
+
+
 
 
 

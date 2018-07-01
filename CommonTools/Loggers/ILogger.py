@@ -8,7 +8,7 @@ from logbook import Logger
 
 class ILogger(object):
 
-    def __init__(self):
+    def __init__(self, **kwargs):
         self.logger = Logger(self.name)
 
     def _process_kwargs(self, kwargs):

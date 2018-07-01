@@ -14,7 +14,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session
 
-import environment
 from environment import *
 
 # Base class that maintains the catalog of tables and classes in db
@@ -61,7 +60,7 @@ class Connection( object ):
         if self._credential_file is not None:
             credentials = CredentialLoader( self._credential_file )
 
-        # credentials = ET.parse( self._credential_file )
+            # credentials = ET.parse( self._credential_file )
             self._server = credentials.find( 'db_host' )
             self._port = credentials.find( 'db_port' )
             if self._port is not None:
@@ -85,7 +84,7 @@ class MySqlConnection( Connection ):
 
     def __init__( self, credential_file, create_engine=True ):
         self._driver = '+mysqlconnector'
-        super( __class__, self ).__init__( credential_file , create_engine)
+        super( __class__, self ).__init__( credential_file, create_engine )
 
     def make_dsn( self ):
         """Creates the database connection url for the mysql database. It sets the
@@ -95,13 +94,20 @@ class MySqlConnection( Connection ):
             server = "%s:%s" % (self._server, self._port)
         else:
             server = self._server
-            self._dsn = "mysql%s://%s:%s@%s/%s" % (self._driver, self._username, self._password, server, self._db_name)
-            print(self._dsn)
+            self._dsn = "mysql%s://%s:%s@%s/%s?charset=utf8mb4" % (self._driver, self._username, self._password, server, self._db_name)
+            print( self._dsn )
             return self._dsn
 
     def _make_engine( self ):
         self.make_dsn()
-        self.engine = create_engine( self._dsn )
+        self.engine = create_engine(
+            self._dsn,
+            # encoding='utf8mb4',
+            # connect_args={
+                # 'charset': 'utfmb4',
+            #     'collation': 'utfmb4_unicode_ci'
+            # }
+        )
 
 
 class SqliteFileConnection( Connection ):

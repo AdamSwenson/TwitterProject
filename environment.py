@@ -8,8 +8,8 @@ import sys
 
 ############################## Global control variables ###############
 # Whether this is a test
-TEST = True
-# TEST = False
+# TEST = True
+TEST = False
 
 # ITEM_TYPE = 'user'
 ITEM_TYPE = 'tweet'
@@ -39,7 +39,7 @@ SLACK_HEARTBEAT_LIMIT = 1000000
 # flushing / committing
 # For data processing, this should be pretty high (e.g., 10000)
 # For twitter searching, the value should be pretty low (e.g, 10)
-DB_QUEUE_SIZE = 10
+DB_QUEUE_SIZE = 5
 # This isn't used by the mining functions
 CLIENT_QUEUE_SIZE = 700
 
@@ -89,7 +89,8 @@ TEST_CREDENTIALS_FILE = '%s/tests/helpers/sql_local_testing_credentials.xml' % P
 if TEST:
     CREDENTIAL_FILE = TEST_CREDENTIALS_FILE
 else:
-    CREDENTIAL_FILE = '%s/private_credentials/sql_local_credentials.xml' % BASE
+    # CREDENTIAL_FILE = '%s/private_credentials/sql_local_credentials.xml' % BASE
+    CREDENTIAL_FILE = '%s/private_credentials/sql_miner_laptop_credentials.xml' % BASE
 
 
 # Data and experiments

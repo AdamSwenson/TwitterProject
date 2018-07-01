@@ -8,12 +8,14 @@ __author__ = 'adam'
 import csv
 
 
-def write_csv( csvFile, toWrite ):
+def write_csv( csvFile, rowToWrite ):
     """TODO: let this figure out whether needs i, j or i"""
-    with open( csvFile, 'w' ) as csvfile:
+    with open( csvFile, 'a' ) as csvfile:
         writer = csv.writer( csvfile )
-        for i in toWrite:
-            writer.writerow( [ i ] )
+        # for i in toWrite:
+        if type(rowToWrite) is not list:
+            rowToWrite = [rowToWrite]
+        writer.writerow(  rowToWrite  )
 
 
 #             for i, j in toWrite:

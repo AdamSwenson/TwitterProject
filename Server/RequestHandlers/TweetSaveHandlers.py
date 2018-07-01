@@ -35,7 +35,7 @@ class TweetSaveHandler( IRequestHandler ):
 
     spinner = Spinner( 'Loading ' )
 
-    logger = FileWritingLogger( name='TweetSaveHandler' )
+    # logger = FileWritingLogger( name='TweetSaveHandler' )
 
     def delete( self ):
         """closes all operations"""

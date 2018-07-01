@@ -36,7 +36,7 @@ class UserSaveHandler( IRequestHandler):
 
     spinner = Spinner( 'Loading ' )
 
-    logger = FileWritingLogger( name='UserSaveHandler' )
+    # logger = FileWritingLogger( name='UserSaveHandler' )
 
     def delete( self ):
         """closes all operations"""
