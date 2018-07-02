@@ -9,17 +9,24 @@ import configparser
 
 ############################ Locations  ############################
 ROOT = os.getenv( "HOME" )
+# The folder containing environment.py
 PROJ_BASE = os.path.abspath(os.path.dirname(__file__))
 
 # Folders outside of the project foler
 enclosing = os.path.abspath(os.path.dirname(PROJ_BASE))
-print(PROJ_BASE)
-print(enclosing)
+
+# All login credentials are defined in files here.
+# THIS FOLDER MUST NOT BE COMMITTED TO VERSION CONTROL!
 CREDENTIALS_FOLDER_PATH = "%s/private_credentials" % enclosing
+
 # Processed data files
 DATA_FOLDER = "%s/private_data" % enclosing
 DB_FOLDER = "%s/Desktop/TwitterDataAnalysisLogs/dbs" % ROOT
+
+# Where parameters for experiments are defined
 EXPERIMENTS_FOLDER = '%s/Experiments' % enclosing
+
+# Where to put log files
 LOG_FOLDER_PATH = "%s/Desktop/TwitterDataAnalysisLogs" % ROOT
 
 
@@ -35,6 +42,11 @@ parser.add_argument('--config',
 parser.add_argument('--analysis',
                     help="Load the configuration for data analysis",
                     default="data-analysis")
+# These are just flags
+parser.add_argument('--testing',
+                    help="Load the configuration for data analysis",
+                    default="testing")
+
 args = parser.parse_args()
 
 configFile = '%s/configurations/%s.config.ini' % (PROJ_BASE, args.config)
@@ -45,7 +57,8 @@ config.read(configFile)
 #### Global control variables
 TEST = config['control'].getboolean('TEST')
 ITEM_TYPE = config['control'].get('ITEM_TYPE')
-LIMIT = config['control'].getint('LIMIT')
+LIMIT = config['control'].get('LIMIT')
+LIMIT = None if LIMIT == 'None' else int(LIMIT)
 #### Logging
 INTEGRITY_LOGGING = config['logging'].getboolean('INTEGRITY_LOGGING')
 TIME_LOGGING = config['logging'].getboolean('TIME_LOGGING')
