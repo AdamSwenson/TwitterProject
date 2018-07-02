@@ -104,6 +104,13 @@ class OrmSaveQueue:
         Logger.log("Save rate          %s" % save_rate)
         Logger.log("Invalid tweets     %s" % self._invalidCount)
 
+        self.reset_counts()
+
+    def reset_counts( self ):
+        self._saveAttemptCount = 0
+        self._saveCount = 0
+        self._invalidCount=0
+
 
 
 
