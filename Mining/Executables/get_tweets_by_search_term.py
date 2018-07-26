@@ -5,6 +5,7 @@ Created by adam on 6/28/18
 """
 __author__ = 'adam'
 import asyncio
+from datetime import datetime
 
 from progress.spinner import MoonSpinner
 
@@ -58,7 +59,7 @@ async def run():
             received_count += len( results )
             spinner.next()
             if received_count % 100 == 0:
-                print( "                             %s  " % received_count )
+                print( "                             %s    %s " % (received_count, datetime.now()) )
 
     except Exception as e:
         print( e )

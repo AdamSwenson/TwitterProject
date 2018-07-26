@@ -39,16 +39,16 @@ def make_non_orm_app():
 
 def make_app():
     if environment.WHICH_SERVER == 'orm':
+        print(" \n starting orm")
         return make_sqlalchemy_app()
     if environment.WHICH_SERVER == 'non-orm':
         return make_non_orm_app()
 
 
 def main():
-    print( 'running dsg main on port %s' % environment.DB_PORT )
+    print( 'running database server main on port %s' % environment.DB_PORT )
     try:
         app = make_app()
-
         sockets = tornado.netutil.bind_sockets( environment.DB_PORT )
         tornado.process.fork_processes( 0 )  # Forks multiple sub-processes
         server = tornado.httpserver.HTTPServer( app )

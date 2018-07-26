@@ -1,4 +1,7 @@
 """
+DEPRECATED. THIS IS THE OLD VERSION....
+
+
 Automatically downloads tweets for the provided terms
 
 NB, this used to be called 'Automine4.py'

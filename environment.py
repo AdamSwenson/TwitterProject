@@ -68,10 +68,10 @@ SLACK_HEARTBEAT_LIMIT = config['logging'].getint('SLACK_HEARTBEAT_LIMIT')
 DB_QUEUE_SIZE = config['queues'].getint('DB_QUEUE_SIZE')
 CLIENT_QUEUE_SIZE = config['queues'].getint('CLIENT_QUEUE_SIZE')
 #### Database
-CREDENTIAL_FILE = '%s/private_credentials/%s' % (CREDENTIALS_FOLDER_PATH, config['database'].get('CREDENTIALS_FILE'))
+CREDENTIAL_FILE = '%s/%s' % (CREDENTIALS_FOLDER_PATH, config['database'].get('CREDENTIALS_FILE'))
 DB_PORT = config['database'].getint('DB_PORT')
 DB_URL = "http://127.0.0.1:%s" % DB_PORT
-WHICH_SERVER = config['control'].get('WHICH_SERVER')
+WHICH_SERVER = config['database'].get('WHICH_SERVER')
 ENGINE = config['database'].get('ENGINE')
 
 
@@ -95,20 +95,8 @@ sys.path.append(UNIT_TESTS_PATH)
 
 
 #### Credentials
-SLACK_CREDENTIAL_FILE = "%s/private_credentials/slack-credentials.xml" % CREDENTIALS_FOLDER_PATH
-TWITTER_CREDENTIAL_FILE = "%s/private_credentials/twittercredentials2.xml" % CREDENTIALS_FOLDER_PATH
-
-# MySql credentials
-# CredentialLoader
-#
-# TEST_CREDENTIALS_FILE = '%s/tests/helpers/sql_local_testing_credentials.xml' % PROJ_BASE
-#
-# if TEST:
-#     CREDENTIAL_FILE = TEST_CREDENTIALS_FILE
-# else:
-#     # CREDENTIAL_FILE = '%s/private_credentials/sql_local_credentials.xml' % BASE
-#     CREDENTIAL_FILE = '%s/private_credentials/sql_miner_laptop_credentials.xml' % BASE
-
+SLACK_CREDENTIAL_FILE = "%s/slack-credentials.xml" % CREDENTIALS_FOLDER_PATH
+TWITTER_CREDENTIAL_FILE = "%s/twittercredentials2.xml" % CREDENTIALS_FOLDER_PATH
 
 #### Data and experiments
 MAPPING_PATH = "%s/DataAnalysis/mappings" % PROJ_BASE
