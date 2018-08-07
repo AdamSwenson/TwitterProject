@@ -31,6 +31,12 @@ LOG_FOLDER_PATH = "%s/Desktop/TwitterDataAnalysisLogs" % ROOT
 
 
 ######################## Configuration ############################
+# NB, for ipython, do this to inject config value
+# (on command line would've been --config=data-analysis)
+# import sys
+# sys.argv = ['data-analysis']
+# import environment
+
 import argparse
 parser = argparse.ArgumentParser()
 # Config actually takes a value
