@@ -22,9 +22,13 @@ search_terms_file = "%s/tweet-search-terms.csv" % env.EXPERIMENTS_FOLDER
 
 spinner = MoonSpinner()
 
+# How often to update the terminal
+NOTICE_LIMIT = 5000
 
 async def run():
     received_count = 0
+    # This will be used to control how often the terminal displays an update on progress
+    notice_count = 0
 
     # Set up the machinery for saving the
     # processed results
@@ -57,9 +61,12 @@ async def run():
             # send the results to the server to be saved
             await c.send( results )
             received_count += len( results )
+            notice_count += len(results)
             spinner.next()
-            if received_count % 100 == 0:
+            # if received_count % 100 == 0:
+            if notice_count >= NOTICE_LIMIT:
                 print( "                             %s    %s " % (received_count, datetime.now()) )
+                notice_count = 0
 
     except Exception as e:
         print( e )
