@@ -27,8 +27,6 @@ fileConfig(config.config_file_name)
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 # target_metadata = None
-
-
 from Models import TweetORM
 target_metadata = TweetORM.Base.metadata
 
