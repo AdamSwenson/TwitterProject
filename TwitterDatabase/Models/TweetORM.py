@@ -91,7 +91,6 @@ class Tweets(Base):
         return 'tweet'
 
 
-
 tweetsXtags = Table('tweetsXtags', Base.metadata,
                     Column('tweetID', Integer), # ForeignKey('tweets.tweetID')),
                     Column('tagID', Integer), # ForeignKey('hashtags.tagID'))
