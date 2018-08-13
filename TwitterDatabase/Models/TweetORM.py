@@ -43,6 +43,8 @@ class Users(Base):
     is_translation_enabled = Column(String(10))
     other_data = Column(JSON())
     record_created = Column(DateTime, server_default=func.now())
+    record_updated = Column(DateTime, onupdate=func.now())
+    audit_data = Column(JSON())
 
     def item_type( self ):
         return 'user'
@@ -58,6 +60,8 @@ class Hashtags(Base):
     # Notice that each column is also a normal Python instance attribute.
     tagID = Column(Integer, primary_key=True)
     hashtag = Column(String(100), nullable=False)
+    # record_created = Column(DateTime, server_default=func.now())
+    # record_updated = Column(DateTime, onupdate=func.now())
 
 
 class Tweets(Base):
@@ -80,8 +84,8 @@ class Tweets(Base):
     profile_location = Column(String(100))
     other_data = Column(JSON())
     record_created = Column(DateTime,  server_default=func.now())
-    # record_updated = Column(DateTime)
-    # audit_data = Column(JSON())
+    record_updated = Column(DateTime, onupdate=func.now())
+    audit_data = Column(JSON())
 
     def item_type( self ):
         return 'tweet'
