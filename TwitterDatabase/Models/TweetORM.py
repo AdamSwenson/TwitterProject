@@ -43,7 +43,7 @@ class Users(Base):
     is_translation_enabled = Column(String(10))
     other_data = Column(JSON())
     record_created = Column(DateTime, server_default=func.now())
-    record_updated = Column(DateTime, onupdate=func.now())
+    record_updated = Column(DateTime, onupdate=datetime.datetime.now)
     audit_data = Column(JSON())
 
     def item_type( self ):
