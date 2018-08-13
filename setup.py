@@ -28,6 +28,6 @@ setup(
         "nltk",
         "progress",
         "sqlalchemy",
-        "tornado", 'requests', 'aiounittest'
+        "tornado", 'requests', 'aiounittest', 'alembic'
     ],
 )

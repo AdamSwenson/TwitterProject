@@ -3,10 +3,12 @@ This contains classes for loading tweet data
 
 In the process of being converted to use sqlalchemy
 """
-from sqlalchemy import Table, Column, ForeignKey, Integer, String, JSON
+from sqlalchemy import Table, Column, ForeignKey, Integer, String, JSON, DateTime
 from sqlalchemy.ext.declarative import declarative_base
-
 from sqlalchemy import inspect
+
+import datetime
+from sqlalchemy.sql import func
 
 # import DatabaseAccessObjects.EngineMakers
 # from DatabaseAccessObjects import DataConnections
@@ -15,38 +17,6 @@ import json
 
 # Base class that maintains the catalog of tables and classes in db
 Base = declarative_base()
-
-
-class Hashtags(Base):
-    __tablename__ = 'hashtags'
-    # Here we define columns for the table hashtags
-    # Notice that each column is also a normal Python instance attribute.
-    tagID = Column(Integer, primary_key=True)
-    hashtag = Column(String(100), nullable=False)
-
-
-class Tweets(Base):
-    __tablename__ = 'tweets'
-    # Here we define columns for the table address.
-    # Notice that each column is also a normal Python instance attribute.
-    tweetID = Column(Integer, primary_key=True, autoincrement=False)
-    userID = Column(Integer, ForeignKey('users.userID'))
-    tweetText = Column(String(250))
-    favorite_count = Column(Integer)
-    source = Column(String(250), nullable=False)
-    retweeted = Column(String(10))
-    retweet_count = Column(Integer)
-    in_reply_to_screen_name = Column(String(100))
-    favorited = Column(String(10))
-    lang = Column(String(100))
-    created_at = Column(String(100))
-    profile_background_tile = Column(String(100))
-    is_translation_enabled = Column(String(100))
-    profile_location = Column(String(100))
-    other_data = Column(JSON())
-
-    def item_type( self ):
-        return 'tweet'
 
 
 class Users(Base):
@@ -72,6 +42,9 @@ class Users(Base):
     location = Column(String(225))
     is_translation_enabled = Column(String(10))
     other_data = Column(JSON())
+    record_created = Column(DateTime, server_default=func.now())
+    record_updated = Column(DateTime, onupdate=func.now())
+    audit_data = Column(JSON())
 
     def item_type( self ):
         return 'user'
@@ -81,6 +54,49 @@ class Users(Base):
         return { column.key : getattr(self, column.key) for column in mapper.attrs}
 
 
+class Hashtags(Base):
+    __tablename__ = 'hashtags'
+    # Here we define columns for the table hashtags
+    # Notice that each column is also a normal Python instance attribute.
+    tagID = Column(Integer, primary_key=True)
+    hashtag = Column(String(100), nullable=False)
+    # record_created = Column(DateTime, server_default=func.now())
+    # record_updated = Column(DateTime, onupdate=func.now())
+
+
+class Tweets(Base):
+    __tablename__ = 'tweets'
+    # Here we define columns for the table address.
+    # Notice that each column is also a normal Python instance attribute.
+    tweetID = Column(Integer, primary_key=True, autoincrement=False)
+    userID = Column(Integer) #, ForeignKey('users.userID'))
+    tweetText = Column(String(250))
+    favorite_count = Column(Integer)
+    source = Column(String(250), nullable=False)
+    retweeted = Column(String(10))
+    retweet_count = Column(Integer)
+    in_reply_to_screen_name = Column(String(100))
+    favorited = Column(String(10))
+    lang = Column(String(100))
+    created_at = Column(String(100))
+    profile_background_tile = Column(String(100))
+    is_translation_enabled = Column(String(100))
+    profile_location = Column(String(100))
+    other_data = Column(JSON())
+    record_created = Column(DateTime,  server_default=func.now())
+    record_updated = Column(DateTime, onupdate=func.now())
+    audit_data = Column(JSON())
+
+    def item_type( self ):
+        return 'tweet'
+
+
+tweetsXtags = Table('tweetsXtags', Base.metadata,
+                    Column('tweetID', Integer), # ForeignKey('tweets.tweetID')),
+                    Column('tagID', Integer), # ForeignKey('hashtags.tagID'))
+                    )
+
+##################### Non definitional stuff
 
 class Tweet(Tweets):
     """Better named alias"""
@@ -200,12 +216,6 @@ def UserFactory( data: dict ):
 
 
 
-
-
-tweetsXtags = Table('tweetsXtags', Base.metadata,
-                    Column('tweetID', Integer, ForeignKey('tweets.tweetID')),
-                    Column('tagID', Integer, ForeignKey('hashtags.tagID'))
-                    )
 
 
 def create_db_tables(engine, seed=False):
