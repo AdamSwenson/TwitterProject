@@ -215,9 +215,6 @@ def UserFactory( data: dict ):
     #         forJson[k] = datum
 
 
-
-
-
 def create_db_tables(engine, seed=False):
     """Creates tables in the database
     Create all tables in the engine.
