@@ -53,6 +53,18 @@ class Users(Base):
         mapper = inspect(Users)
         return { column.key : getattr(self, column.key) for column in mapper.attrs}
 
+    def add_tweet_update_info_to_audit_data( self, toAdd ):
+        d = self.audit_data
+        for k in d.keys():
+            print(k)
+
+        if 'updated_from_tweet' not in d.keys():
+            print('adding')
+            d['updated_from_tweet'] = []
+
+        d['updated_from_tweet'].append(toAdd)
+        self.audit_data = d
+
 
 class Hashtags(Base):
     __tablename__ = 'hashtags'
