@@ -5,6 +5,8 @@ that data or updating the users table from such data
 
 Created by adam on 8/16/18
 """
+from Repositories.NewOrmRepositories import get_user_by_id
+
 __author__ = 'adam'
 
 import json
@@ -13,7 +15,6 @@ import sqlalchemy
 
 from TwitterDatabase.Models.TweetORM import Tweet
 from TwitterDatabase.Models.TweetORM import UserFactory
-from TwitterDatabase.Models.TweetORM import Users as User
 
 """Database fields which should be updated if they have changed"""
 USER_FIELDS_TO_UPDATE = ('friends_count', 'followers_count', 'statuses_count')
@@ -26,15 +27,6 @@ def tweets_with_other_data_generator( session:  sqlalchemy.orm.Session ):
     """
     for tweet in session.query( Tweet ).filter( Tweet.other_data.isnot( None ) ):
         yield tweet
-
-
-def get_user_by_id( user_id: int, session: sqlalchemy.orm.Session ):
-    """Loads user object from database, given their user id
-    :type user_id: int
-    :param user_id:
-    :type session: sqlalchemy.orm.Session
-    """
-    return session.query( User ).filter( User.userID == user_id ).first()
 
 
 # ----------------- Actual extraction tools

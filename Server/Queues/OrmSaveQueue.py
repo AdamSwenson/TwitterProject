@@ -5,23 +5,22 @@ import sqlalchemy
 
 __author__ = 'adam'
 
-import asyncio
-
 from collections.__init__ import deque
 from progress.spinner import MoonSpinner
 from tornado import gen, locks
 from CommonTools.Loggers.FileLoggers import FileWritingLogger
 from CommonTools.FileTools.CsvFileTools import write_csv
-from Profiling.OptimizingTools import timestamp_writer, standard_timestamp
-import sqlalchemy
+from Profiling.OptimizingTools import standard_timestamp
+from TwitterDatabase.Models.TweetORM import Tweet, User
+from TwitterDatabase.Repositories.NewOrmRepositories import update_tweet_if_changed
 lock = locks.Lock()
-from tornado_sqlalchemy import SessionMixin, as_future
 
 import environment
 
 logpath = "%s/mining/twitter-utf-fuckup.txt" % environment.LOG_FOLDER_PATH
 csvlog = "%s/mining/twitter-save-data.csv" % environment.LOG_FOLDER_PATH
-Logger = FileWritingLogger(log_path=logpath, name='OrmSaveQueue')
+Logger = FileWritingLogger( log_path=logpath, name='OrmSaveQueue' )
+
 
 class OrmSaveQueue:
     spinner = MoonSpinner()
@@ -35,6 +34,8 @@ class OrmSaveQueue:
         self._saveAttemptCount = 0
         # number invalid tweets
         self._invalidCount = 0
+        # number of updated tweets
+        self._updatedCount = 0
 
         self.batch_size = batch_size
         self.store = deque()
@@ -46,13 +47,13 @@ class OrmSaveQueue:
         self._queryCount += 1
 
     @gen.coroutine
-    def enque( self, modelList: list, session: sqlalchemy.orm.Session = None ):
+    def enque( self, modelList: list, session=None ):
         """
-        Push a list of orm objects (tweet or user) into the queue for saving to
+        Push a list of users into the queue for saving to
         the db. Once the batch size has been reached,
         it will be saved.
-        :type session: sqlalchemy.orm.Session
-        :param session: The session is an instance of a sqlalchemy session
+        The session is an instance of a sqlalchemy session
+        :param session:
         :type modelList: list
         """
         with (yield lock.acquire()):
@@ -66,25 +67,30 @@ class OrmSaveQueue:
         if len( self.store ) >= self.batch_size:
             yield from self.save_queued( session )
 
-    async def save_queued( self, session: sqlalchemy.orm.Session ):
+    async def save_queued( self, session ):
         """Flushes the orm objects in the queue to the database"""
         self.increment_query_count()
 
         async with lock:
-            if len(self.store) == 0 : return True
+            if len( self.store ) == 0: return True
 
-            b = [ self.store.pop() for _ in range( 0, len(self.store) ) ]
+            b = [ self.store.pop() for _ in range( 0, len( self.store ) ) ]
 
             for o in b:
                 self._saveAttemptCount += 1
                 try:
-                    session.add(o)
+                    session.add( o )
                     session.commit()
                     self._saveCount += 1
-                except sqlalchemy.exc.IntegrityError:
-                    # this is where the update can happen
+                except sqlalchemy.exc.IntegrityError as e:
+                    # print('integrity error %s' % e)
+                    # The obj already exists, so we can try updating it
+                    # first, we get rid of the attempted save
                     session.rollback()
-                except sqlalchemy.exc.DatabaseError:
+                    # now try updating
+                    self.update_handler(o, session)
+                except sqlalchemy.exc.DatabaseError as e:
+                    # print('db error %s' % e)
                     self._invalidCount += 1
                     session.rollback()
                 except sqlalchemy.orm.exc.FlushError:
@@ -96,30 +102,44 @@ class OrmSaveQueue:
     def record_stats( self ):
         save_rate = self._saveCount / self._saveAttemptCount
 
-        r = [standard_timestamp(), self._saveAttemptCount, self._saveCount, save_rate, self._invalidCount]
-        write_csv(csvlog, r)
+        r = [ standard_timestamp(), self._saveAttemptCount, self._saveCount, save_rate, self._invalidCount, self._updatedCount ]
+        write_csv( csvlog, r )
 
-        Logger.log(" ------------ ---------------- ------------ " )
-        Logger.log("Save attempt count %s" % self._saveAttemptCount)
-        Logger.log("Save success count %s" % self._saveCount)
-        Logger.log("Save rate          %s" % save_rate)
-        Logger.log("Invalid tweets     %s" % self._invalidCount)
+        Logger.log( " ------------ ---------------- ------------ " )
+        Logger.log( "Save attempt count %s" % self._saveAttemptCount )
+        Logger.log( "Save success count %s" % self._saveCount )
+        Logger.log( "Save rate          %s" % save_rate )
+        Logger.log( "Invalid tweets     %s" % self._invalidCount )
+        Logger.log( "Updated tweets     %s" % self._updatedCount )
 
         self.reset_counts()
 
     def reset_counts( self ):
         self._saveAttemptCount = 0
         self._saveCount = 0
-        self._invalidCount=0
+        self._invalidCount = 0
+        self._updatedCount = 0
 
+    def update_handler( self, ormObject , session):
+        """This is called when there has been an integrity error,
+        which indicates that the object already exists. It determines
+        what sort of object we're dealing with and dispatches the appropriate
+        task to update it
+        """
+        # Determine what we're dealing with
+        if isinstance(ormObject, Tweet):
+            if update_tweet_if_changed(ormObject, session):
+                self._updatedCount += 1
+                # print("updated %s" % self._updatedCount)
 
-
+        elif isinstance(ormObject, User):
+            pass
 
 
         # except Exception as e:
 
-                # print( "error  %s " % e )
-                # raise e
+        # print( "error  %s " % e )
+        # raise e
 
     #
     # async def handle_send( self, future: asyncio.Future ):
