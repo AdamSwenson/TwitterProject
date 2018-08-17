@@ -42,6 +42,7 @@ def update_tweet_if_changed(tweet: Tweet, session):
     # existingTweet = get_tweet_by_id(  tweet.tweetID, session )
     session.merge(tweet)
 
+    # todo dev: renable this stuff below (and get working) if decide it is needed (TWIT-38)
     # # check that actually exists, if not, uh oh
     # if not isinstance(existingTweet, Tweet):
     #     raise sqlalchemy.exc.DatabaseError

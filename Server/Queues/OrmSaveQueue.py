@@ -36,6 +36,8 @@ class OrmSaveQueue:
         self._invalidCount = 0
         # number of updated tweets
         self._updatedCount = 0
+        # number of users whose data has been updated from tweets
+        self._usersUpdatedCount = 0
 
         self.batch_size = batch_size
         self.store = deque()
@@ -102,7 +104,7 @@ class OrmSaveQueue:
     def record_stats( self ):
         save_rate = self._saveCount / self._saveAttemptCount
 
-        r = [ standard_timestamp(), self._saveAttemptCount, self._saveCount, save_rate, self._invalidCount, self._updatedCount ]
+        r = [ standard_timestamp(), self._saveAttemptCount, self._saveCount, save_rate, self._invalidCount, self._updatedCount, self._usersUpdatedCount ]
         write_csv( csvlog, r )
 
         Logger.log( " ------------ ---------------- ------------ " )
@@ -111,7 +113,7 @@ class OrmSaveQueue:
         Logger.log( "Save rate          %s" % save_rate )
         Logger.log( "Invalid tweets     %s" % self._invalidCount )
         Logger.log( "Updated tweets     %s" % self._updatedCount )
-
+        Logger.log( "Updated users     %s" % self._usersUpdatedCount )
         self.reset_counts()
 
     def reset_counts( self ):
@@ -119,6 +121,7 @@ class OrmSaveQueue:
         self._saveCount = 0
         self._invalidCount = 0
         self._updatedCount = 0
+        self._usersUpdatedCount = 0
 
     def update_handler( self, ormObject , session):
         """This is called when there has been an integrity error,
@@ -133,7 +136,12 @@ class OrmSaveQueue:
                 # print("updated %s" % self._updatedCount)
 
         elif isinstance(ormObject, User):
-            pass
+            # This is just what the handler for tweets does.
+            # Was more ambitious under TWIT-38, but not sure need
+            # all the extra apparatus
+            session.merge(ormObject)
+            session.commit()
+            self._usersUpdatedCount += 1
 
 
         # except Exception as e:

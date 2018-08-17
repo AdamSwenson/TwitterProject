@@ -18,7 +18,8 @@ from Server.Queues.OrmSaveQueue import OrmSaveQueue
 from Server.RequestHandlers.HandlerParent import IRequestHandler
 from Server.ServerTools import Helpers
 from Server.ServerTools.ServerExceptions import DBExceptions
-from TwitterDatabase.Models.TweetORM import TweetFactory
+from TwitterDatabase.Models.TweetORM import TweetFactory, UserFactory
+from Mining.SearchResultsProcessing.UserExtractionTools import extract_user_dict_from_tweet, add_audit_data_to_user
 
 
 class TweetSaveHandler( IRequestHandler ):
@@ -66,6 +67,11 @@ class TweetSaveHandler( IRequestHandler ):
 
             # The payload is a list containing dictionaries
             tweets = [ TweetFactory( p ) for p in payload ]
+            # now extract users from the tweet objects' other_data field
+            users = [add_audit_data_to_user(UserFactory(extract_user_dict_from_tweet( tweet )), tweet.tweetID) for tweet in tweets]
+            # add the users to the tweets list
+            tweets += users
+
             with self.make_session() as session:
                 yield from asyncio.ensure_future( type( self ).q.enque( tweets, session ) )
             self.write( "success" )

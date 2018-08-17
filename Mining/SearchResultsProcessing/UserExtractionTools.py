@@ -12,6 +12,7 @@ __author__ = 'adam'
 import json
 
 import sqlalchemy
+import datetime
 
 from TwitterDatabase.Models.TweetORM import Tweet
 from TwitterDatabase.Models.TweetORM import UserFactory
@@ -30,6 +31,15 @@ def tweets_with_other_data_generator( session:  sqlalchemy.orm.Session ):
 
 
 # ----------------- Actual extraction tools
+def add_audit_data_to_user(user, tweetId):
+    """Adds a record to the audit_data field when the user
+    is updated from the object received with a tweet"""
+    if user.audit_data is None:
+        user.audit_data = {}
+    user.audit_data[tweetId] = datetime.datetime.now().isoformat()
+    return user
+
+
 def extract_user_dict_from_tweet( tweet: Tweet ):
     """Takes the other_data field from a tweet object and
     extracts the data for the user from it.
@@ -68,7 +78,7 @@ def update_or_create_user_from_tweet( tweet: Tweet, session: sqlalchemy.orm.Sess
         if user is None:
             # make user from the json
             user = UserFactory( data )
-            user.audit_data = { 'created_from_tweet': tweet.tweetID }
+            user.audit_data = { 'created_from_tweet' : tweet.tweetID}
             # the new object isn't yet tracked, so we need to add it to the session
             session.add(user)
         else:
