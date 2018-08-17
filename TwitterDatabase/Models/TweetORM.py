@@ -191,6 +191,7 @@ def UserFactory( data: dict ):
     defined fields.
     NB, this simply creates and populates the User object. It does not add or
     commit it to the database
+    :rtype: object
     :type data: dict
     """
     # The first step is to sort the incoming data
