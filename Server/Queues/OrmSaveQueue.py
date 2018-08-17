@@ -13,7 +13,7 @@ from tornado import gen, locks
 from CommonTools.Loggers.FileLoggers import FileWritingLogger
 from CommonTools.FileTools.CsvFileTools import write_csv
 from Profiling.OptimizingTools import timestamp_writer, standard_timestamp
-
+import sqlalchemy
 lock = locks.Lock()
 from tornado_sqlalchemy import SessionMixin, as_future
 
@@ -46,13 +46,13 @@ class OrmSaveQueue:
         self._queryCount += 1
 
     @gen.coroutine
-    def enque( self, modelList: list, session=None ):
+    def enque( self, modelList: list, session: sqlalchemy.orm.Session = None ):
         """
-        Push a list of users into the queue for saving to
+        Push a list of orm objects (tweet or user) into the queue for saving to
         the db. Once the batch size has been reached,
         it will be saved.
-        The session is an instance of a sqlalchemy session
-        :param session:
+        :type session: sqlalchemy.orm.Session
+        :param session: The session is an instance of a sqlalchemy session
         :type modelList: list
         """
         with (yield lock.acquire()):
@@ -66,7 +66,7 @@ class OrmSaveQueue:
         if len( self.store ) >= self.batch_size:
             yield from self.save_queued( session )
 
-    async def save_queued( self, session ):
+    async def save_queued( self, session: sqlalchemy.orm.Session ):
         """Flushes the orm objects in the queue to the database"""
         self.increment_query_count()
 
@@ -82,6 +82,7 @@ class OrmSaveQueue:
                     session.commit()
                     self._saveCount += 1
                 except sqlalchemy.exc.IntegrityError:
+                    # this is where the update can happen
                     session.rollback()
                 except sqlalchemy.exc.DatabaseError:
                     self._invalidCount += 1

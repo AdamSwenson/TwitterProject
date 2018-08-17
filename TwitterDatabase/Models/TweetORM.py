@@ -53,17 +53,24 @@ class Users(Base):
         mapper = inspect(Users)
         return { column.key : getattr(self, column.key) for column in mapper.attrs}
 
-    def add_tweet_update_info_to_audit_data( self, toAdd ):
-        d = self.audit_data
-        for k in d.keys():
-            print(k)
+    # def add_tweet_update_info_to_audit_data( self, toAdd ):
+    #     d = self.audit_data
+    #     for k in d.keys():
+    #         print(k)
+    #
+    #     if 'updated_from_tweet' not in d.keys():
+    #         print('adding')
+    #         d['updated_from_tweet'] = []
+    #
+    #     d['updated_from_tweet'].append(toAdd)
+    #     self.audit_data = d
 
-        if 'updated_from_tweet' not in d.keys():
-            print('adding')
-            d['updated_from_tweet'] = []
 
-        d['updated_from_tweet'].append(toAdd)
-        self.audit_data = d
+class User(Users):
+    """Better named alias"""
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
 
 
 class Hashtags(Base):
@@ -103,18 +110,18 @@ class Tweets(Base):
         return 'tweet'
 
 
+class Tweet(Tweets):
+    """Better named alias"""
+    def __init__(self, **kwargs):
+        super().__init__( **kwargs)
+
+
 tweetsXtags = Table('tweetsXtags', Base.metadata,
                     Column('tweetID', Integer), # ForeignKey('tweets.tweetID')),
                     Column('tagID', Integer), # ForeignKey('hashtags.tagID'))
                     )
 
 ##################### Non definitional stuff
-
-class Tweet(Tweets):
-    """Better named alias"""
-    def __init__(self, **kwargs):
-        super().__init__( **kwargs)
-
 
 def _make_defined_data(data, defined_keys):
     """Takes the incoming tweet data and pulls out
@@ -173,13 +180,6 @@ def TweetFactory( data: dict ):
 
     # create a new instance with the data
     return Tweet(**defined_data)
-
-
-class User(Users):
-    """Better named alias"""
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
 
 def UserFactory( data: dict ):
     """This consumes a dictionary of data and returns a

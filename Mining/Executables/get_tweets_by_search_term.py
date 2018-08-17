@@ -25,6 +25,7 @@ spinner = MoonSpinner()
 # How often to update the terminal
 NOTICE_LIMIT = 5000
 
+
 async def run():
     received_count = 0
     # This will be used to control how often the terminal displays an update on progress
