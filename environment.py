@@ -36,7 +36,7 @@ LOG_FOLDER_PATH = "%s/Desktop/TwitterDataAnalysisLogs" % ROOT
 # import sys
 # sys.argv = ['data-analysis']
 # import environment
-
+print(sys.argv)
 import argparse
 parser = argparse.ArgumentParser()
 # Config actually takes a value

@@ -69,7 +69,8 @@ class TweetSaveHandler( IRequestHandler ):
             tweets = [ TweetFactory( p ) for p in payload ]
             # now extract users from the tweet objects' other_data field
             users = [add_audit_data_to_user(UserFactory(extract_user_dict_from_tweet( tweet )), tweet.tweetID) for tweet in tweets]
-            # add the users to the tweets list
+            # add the users to the tweets list since the save handler in the queue
+            # is agnostic on what kind of orm object it receives
             tweets += users
 
             with self.make_session() as session:
