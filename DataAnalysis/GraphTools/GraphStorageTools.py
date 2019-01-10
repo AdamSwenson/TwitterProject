@@ -6,8 +6,6 @@ import networkx as nx
 ##Save trimmed graph as gexf
 #Tool for dealing with unicode encoding problems
 
-from django.utils.encoding import smart_str, smart_unicode
-
 class saver:
     problems = []
     @staticmethod
