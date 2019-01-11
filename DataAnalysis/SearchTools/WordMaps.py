@@ -152,17 +152,44 @@ def get_user_ids_for_word( word, db=environment.USER_DB_NO_STOP ):
 
 
 def get_tweet_ids_for_word( word, db=environment.TWEET_DB_MASTER):
-    """Returns the ids of tweets containing  the word """
+    """Returns the ids and other data of tweets containing  the word
+    Returns them as a tuple: (tweet id, user id, word index, sentence index)
+    :param word: The string to search for
+    :param db: The location of the sqlite file
+    :return: list of tuples 
+    """
     query = """
-              SELECT m.tweet_id, m.word_index, m.sentence_index
-              FROM word_map m
-              WHERE m.word=?
-        """
+          SELECT m.tweet_id, id_map.user_id, m.word_index, m.sentence_index
+          FROM word_map m
+          JOIN id_map
+          ON(m.tweet_id = id_map.tweet_id)
+          WHERE m.word=?
+    """
     conn = sqlite3.connect( db )
-    s = (word,)
-    r = conn.execute( query, s )
-    return r.fetchall()
-    conn.close()
+    with conn:
+        #         curs = conn.cursor()  # Attach cursor
+        query0 = """ATTACH DATABASE '%s' as id_map""" % environment.ID_MAP_DB
+        conn.execute(query0)
+        conn.commit()
+
+        # attach_id_map(conn)
+        s = (word,)
+        r = conn.execute( query, s )
+        return r.fetchall()
+
+#
+# def get_tweet_ids_for_word( word, db=environment.TWEET_DB_MASTER):
+#     """Returns the ids of tweets containing  the word """
+#     query = """
+#               SELECT m.tweet_id, m.word_index, m.sentence_index
+#               FROM word_map m
+#               WHERE m.word=?
+#         """
+#     conn = sqlite3.connect( db )
+#     s = (word,)
+#     r = conn.execute( query, s )
+#     return r.fetchall()
+#     conn.close()
 
 # word_map_table_creation_query = """
 #           SELECT m.tweet_id, idm.user_id, m.word_index, m.sentence_index

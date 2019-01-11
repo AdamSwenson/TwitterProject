@@ -34,7 +34,7 @@ REQUIRED = [
     "progress",
     'requests',
     "sqlalchemy",
-    "tornado",
+    "tornado", 'bokeh'
 ]
 
 # What packages are optional?
