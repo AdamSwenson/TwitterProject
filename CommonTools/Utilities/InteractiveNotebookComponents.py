@@ -58,6 +58,10 @@ class Handler( object ):
     def get_output( self ):
         return self.output
 
+    @property
+    def message( self ):
+        return None
+
 
 class TextPlusButtons( object ):
     """
@@ -91,12 +95,15 @@ class TextPlusButtons( object ):
         self.t.value = ''
 
     def reset_output( self, ):
+        # with self.out:
+        #     clear_output()
         self.out.clear_output()
 
     def handle_reset( self, change ):
         self.handler_object.handle_reset()  # reset_handler()
         self.reset_input()
-        self.show_output()
+        self.reset_output()
+        # self.show_output()
 
     def handle_submit( self, change ):
         self.submit.button_style = 'info'
@@ -110,6 +117,8 @@ class TextPlusButtons( object ):
         output = self.handler_object.get_output()
         with self.out:
             clear_output()
+            if self.handler_object.message:
+                print(self.handler_object.message)
             for item in output:
                 print( item )
 

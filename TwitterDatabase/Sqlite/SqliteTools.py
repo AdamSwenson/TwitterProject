@@ -13,7 +13,7 @@ import os
 import sqlite3
 
 import environment
-from CommonTools.Loggers import delete_files
+from CommonTools.Loggers.Helpers import delete_files
 
 
 word_map_table_creation_query = """CREATE TABLE `word_map` (
