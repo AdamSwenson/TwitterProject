@@ -156,7 +156,7 @@ def get_tweet_ids_for_word( word, db=environment.TWEET_DB_MASTER):
     Returns them as a tuple: (tweet id, user id, word index, sentence index)
     :param word: The string to search for
     :param db: The location of the sqlite file
-    :return: list of tuples 
+    :return: list of tuples
     """
     query = """
           SELECT m.tweet_id, id_map.user_id, m.word_index, m.sentence_index
