@@ -5,11 +5,9 @@ Created by adam on 8/17/18
 """
 __author__ = 'adam'
 
-import datetime
-
 import sqlalchemy
 
-from Models.TweetORM import Tweets as Tweet, TweetFactory
+from Models.TweetORM import Tweets as Tweet
 from Models.TweetORM import Users as User
 
 TWEET_FIELDS_TO_UPDATE = ('retweeted', 'retweet_count', 'favorite_count')
@@ -34,13 +32,36 @@ def get_tweet_by_id( tweet_id: int, session: sqlalchemy.orm.Session ):
     return session.query( Tweet ).filter( Tweet.tweetID == tweet_id ).first()
 
 
-def update_tweet_if_changed(tweet: Tweet, session):
+def get_user_tweet_count( userId: int, session: sqlalchemy.orm.Session ):
+    """Returns how many tweets we have for the given user id
+    :type userId: int
+    :type session: sqlalchemy.orm.Session
+    """
+    return session.query( Tweet ).filter( Tweet.userID == userId ).count()
+
+
+def get_user_tweets( userId: int, session: sqlalchemy.orm.Session ):
+    """Returns all tweets belonging to the user"""
+    return session.query( Tweet ).filter( Tweet.userID == userId ).all()
+
+
+def get_user_tweet_timestamps( userId: int, session: sqlalchemy.orm.Session ):
+    """Returns the `created_at` field` for all tweets belonging to the given user """
+    return [ x.created_at for x in get_user_tweets( userId, session ) ]
+
+
+def get_user( userId: int, session: sqlalchemy.orm.Session ):
+    """Returns the user object for the id"""
+    return session.query( User ).filter( User.userID == userId ).all()
+
+
+def update_tweet_if_changed( tweet: Tweet, session ):
     """This is called after the tweet object has been created
     and the db throws and IntegrityError. It checks whether
     the tweet has changed and saves it if so
     """
     # existingTweet = get_tweet_by_id(  tweet.tweetID, session )
-    session.merge(tweet)
+    session.merge( tweet )
 
     # todo dev: renable this stuff below (and get working) if decide it is needed (TWIT-38)
     # # check that actually exists, if not, uh oh
