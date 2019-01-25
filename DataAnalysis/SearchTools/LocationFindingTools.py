@@ -14,7 +14,7 @@ class Done( Exception ):
     pass
 
 
-class CityFinder( object ):
+class StateCityFinder( object ):
     def __init__( self, filepath=environment.DATA_FOLDER ):
         # load state names and abbreviations
         state_abbreviations_file = "%s/us-states.csv" % filepath

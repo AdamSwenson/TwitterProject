@@ -5,7 +5,7 @@ import unittest
 
 __author__ = 'adam'
 
-from DataAnalysis.SearchTools.LocationFindingTools import CityFinder
+from DataAnalysis.SearchTools.LocationFindingTools import StateCityFinder
 
 testcases_commas = [
     # Comma separated
@@ -55,21 +55,21 @@ testcases_locales = [
 alltests = testcases_commas + testcases_spaces + testcases_state_only + testcases_city_only + testcases_locales
 
 
-class TestCityFinder( unittest.TestCase ):
+class TestStateCityFinder( unittest.TestCase ):
 
     def test__lookup_abbrev( self ):
-        cf = CityFinder()
+        cf = StateCityFinder()
         self.assertEqual( cf._lookup_abbrev( 'AZ' ), 'AZ' )
         self.assertEqual( cf._lookup_abbrev( 'az' ), 'AZ' )
 
     def test__lookup_statename( self ):
-        cf = CityFinder()
+        cf = StateCityFinder()
         self.assertEqual( cf._lookup_statename( 'Arizona' ), 'AZ' )
         self.assertEqual( cf._lookup_statename( 'arizona' ), 'AZ' )
         self.assertEqual( cf._lookup_statename( 'ARIZONA' ), 'AZ' )
 
     def test__get_state( self ):
-        cf = CityFinder()
+        cf = StateCityFinder()
         self.assertEqual( cf._lookup_abbrev( 'AZ' ), 'AZ' )
         self.assertEqual( cf._lookup_abbrev( 'az' ), 'AZ' )
         self.assertEqual( cf._lookup_statename( 'Arizona' ), 'AZ' )
@@ -77,27 +77,27 @@ class TestCityFinder( unittest.TestCase ):
         self.assertEqual( cf._lookup_statename( 'ARIZONA' ), 'AZ' )
 
     def test__detect_comma_separated( self ):
-        cf = CityFinder()
+        cf = StateCityFinder()
         for t in testcases_commas:
             self.assertEqual( t[ 1 ], cf._detect_comma_separated( t[ 0 ] ) )
 
     def test__detect_space_separated( self ):
-        cf = CityFinder()
+        cf = StateCityFinder()
         for t in testcases_spaces:
             self.assertEqual(t[ 1 ], cf._detect_space_separated( t[ 0 ] ) )
 
     def test__detect_major_city( self ):
-        cf = CityFinder()
+        cf = StateCityFinder()
         for t in testcases_city_only:
             self.assertEqual( t[ 1 ], cf._detect_major_city( t[ 0 ] ) )
 
     def test__detect_locale( self ):
-        cf = CityFinder()
+        cf = StateCityFinder()
         for t in testcases_locales:
             self.assertEqual(t[ 1 ], cf._detect_locale( t[ 0 ] )  )
 
     def test_parse_location_field( self ):
-        cf = CityFinder()
+        cf = StateCityFinder()
         for t in alltests:
             msg = "Expected {}; Received: {}".format(cf.parse_location_field( t[ 0 ] ), t[ 1 ])
             self.assertEqual( t[ 1 ], cf.parse_location_field( t[ 0 ] ))
