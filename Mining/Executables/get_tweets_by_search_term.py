@@ -27,15 +27,15 @@ spinner = MoonSpinner()
 NOTICE_LIMIT = 5000
 
 
-def make_tweet_searcher(credentials_file):
-    """"Utility to make it easier to recreate a new connection
-     if the original connection gets remotely reset
-     """
-    # Create a connection
-    connection = TwitterConnection( credentials_file )
-
-    # create the object which will execute searches
-    return TweetsGetter( connection )
+# def make_tweet_searcher(credentials_file):
+#     """"Utility to make it easier to recreate a new connection
+#      if the original connection gets remotely reset
+#      """
+#     # Create a connection
+#     connection = TwitterConnection( credentials_file )
+#
+#     # create the object which will execute searches
+#     return TweetsGetter( connection )
 
 
 async def run():
@@ -51,7 +51,7 @@ async def run():
 
     # Create connection to twitter and make the object that will
     # execute searches
-    searcher = make_tweet_searcher(env.TWITTER_CREDENTIAL_FILE)
+    searcher = TweetsGetter(env.TWITTER_CREDENTIAL_FILE)
 
     try:
         result = await c.get_max_tweet_id()
@@ -65,17 +65,17 @@ async def run():
     try:
         # rate limiting is automatically on, so no need to wait
         while True:
-            try:
-                results = searcher.get_tweets_for_search_terms( searchTerms, afterId=maxId )
-                # convert each result to a dictionary
-                results = [ convert_object_into_dict( result ) for result in results ]
-            except ConnectionResetError as cre:
-                # Handle the remote twitter server resetting the connection
-                print("Connection error with remote connection to twitter. \n{}".format(cre))
-                # Make a new connection and searcher and rerun the search
-                searcher = make_tweet_searcher(env.TWITTER_CREDENTIAL_FILE)
-                # Do it again with the same maxId
-                continue
+            # try:
+            results = searcher.get_tweets_for_search_terms( searchTerms, afterId=maxId )
+            # convert each result to a dictionary
+            results = [ convert_object_into_dict( result ) for result in results ]
+            # except ConnectionResetError as cre:
+            #     # Handle the remote twitter server resetting the connection
+            #     print("Connection error with remote connection to twitter. \n{}".format(cre))
+            #     # Make a new connection and searcher and rerun the search
+            #     searcher = make_tweet_searcher(env.TWITTER_CREDENTIAL_FILE)
+            #     # Do it again with the same maxId
+            #     continue
 
             # send the results to the server to be saved
             await c.send( results )
