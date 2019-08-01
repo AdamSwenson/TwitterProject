@@ -3,9 +3,10 @@ Created by adam on 6/28/18
 """
 __author__ = 'adam'
 
-from random import shuffle
+from datetime import datetime
 
 from Mining.TwitterQueryMakers.QueriesBase import GetterBase
+
 
 def make_query( terms ):
     """
@@ -28,27 +29,27 @@ def make_query( terms ):
     return stem
 
 
-class TweetsGetter(GetterBase):
+class TweetsGetter( GetterBase ):
 
     def __init__( self, credentials_file ):
-        super().__init__(credentials_file)
+        super().__init__( credentials_file )
 
-    def get_tweets_for_search_terms( self, search_terms, beforeId=None, afterId=None ):
+    def get_tweets_for_search_terms( self, search_terms: list, beforeId=None, afterId=None ):
         """
         Returns tweet objects for the given user
-        :param userId:
+        :param search_terms:
         :param beforeId:
         :param afterId:
         :return: list
         """
         query = make_query( search_terms )
-        results = []
+        results = [ ]
         for term in search_terms:
             try:
                 results += self.conn.GetSearch( term=term, max_id=beforeId, lang='en', since_id=afterId )
             except ConnectionResetError as cre:
                 # Handle the remote twitter server resetting the connection
-                print("Connection error with remote connection to twitter. \n{}".format(cre))
+                print( "Connection error with remote connection to twitter. {} \n{}".format( datetime.now(), cre ) )
                 # Make a new connection and rerun the search
                 self.make_twitter_connection()
                 results += self.conn.GetSearch( term=term, max_id=beforeId, lang='en', since_id=afterId )
