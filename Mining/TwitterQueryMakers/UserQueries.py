@@ -54,7 +54,16 @@ class UsersGetter:
         :param afterId:
         :return: list
         """
-        results = self.conn.GetUserTimeline(userId, max_id=beforeId, since_id=afterId)
+        try:
+            results = self.conn.GetUserTimeline(userId, max_id=beforeId, since_id=afterId)
+        except ConnectionResetError as cre:
+            # Handle the remote twitter server resetting the connection
+            print("Connection error with remote connection to twitter. \n{}".format(cre))
+            # Make a new connection and rerun the search
+            self.make_twitter_connection()
+            results = self.conn.GetUserTimeline(userId, max_id=beforeId, since_id=afterId)
+            # If it fails this time, we won't catch the error
+
         return [r._json for r in results]
 
 
