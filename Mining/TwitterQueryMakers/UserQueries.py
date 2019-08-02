@@ -5,6 +5,8 @@ Created by adam on 6/21/18
 https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-users-lookup
 
 """
+from http.client import RemoteDisconnected
+
 from Server.ServerTools.Helpers import convert_object_into_dict
 
 __author__ = 'adam'
@@ -56,7 +58,7 @@ class UsersGetter:
         """
         try:
             results = self.conn.GetUserTimeline(userId, max_id=beforeId, since_id=afterId)
-        except ConnectionResetError as cre:
+        except (ConnectionResetError, RemoteDisconnected) as cre:
             # Handle the remote twitter server resetting the connection
             print("Connection error with remote connection to twitter. \n{}".format(cre))
             # Make a new connection and rerun the search
