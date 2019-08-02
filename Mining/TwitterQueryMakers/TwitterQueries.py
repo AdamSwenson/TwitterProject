@@ -1,8 +1,9 @@
 """
 Created by adam on 6/28/18
 """
-
 __author__ = 'adam'
+
+from datetime import datetime
 
 from http.client import RemoteDisconnected
 from Mining.TwitterQueryMakers.QueriesBase import GetterBase
@@ -34,10 +35,10 @@ class TweetsGetter( GetterBase ):
     def __init__( self, credentials_file ):
         super().__init__( credentials_file )
 
-    def get_tweets_for_search_terms( self, search_terms, beforeId=None, afterId=None ):
+    def get_tweets_for_search_terms( self, search_terms: list, beforeId=None, afterId=None ):
         """
         Returns tweet objects for the given user
-        :param userId:
+        :param search_terms:
         :param beforeId:
         :param afterId:
         :return: list
@@ -49,7 +50,7 @@ class TweetsGetter( GetterBase ):
                 results += self.conn.GetSearch( term=term, max_id=beforeId, lang='en', since_id=afterId )
             except (ConnectionResetError, RemoteDisconnected) as cre:
                 # Handle the remote twitter server resetting the connection
-                print( "Connection error with remote connection to twitter. \n{}".format( cre ) )
+                print( "Connection error with remote connection to twitter. {} \n{}".format( datetime.now(), cre ) )
                 # Make a new connection and rerun the search
                 self.make_twitter_connection()
                 results += self.conn.GetSearch( term=term, max_id=beforeId, lang='en', since_id=afterId )
