@@ -5,14 +5,17 @@ from logging.config import fileConfig
 
 from os import sys, path
 
-x = path.dirname( path.dirname( path.dirname( path.abspath( __file__ ) ) ) )
-# print(x)
-# raise Exception(x)
-sys.path.append( x )
+
+# Can't use environment or anything which imports it since the command
+# line variables won't be set
 # import environment
 
+from CommonTools.Credentialing.CredentialTools import CredentialLoader
 
-# from TwitterDatabase.DatabaseAccessObjects.DataConnections import MySqlConnection
+
+x = path.dirname( path.dirname( path.dirname( path.abspath( __file__ ) ) ) )
+sys.path.append( x )
+
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -33,6 +36,21 @@ target_metadata = TweetORM.Base.metadata
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
+
+# Workaround not being able to get creds via environment (command line options
+# make alembic fail)
+# Make sure that the appropriate credential file name is defined in the alembic.ini
+cred_folder = "{}/private_credentials".format(path.dirname(path.dirname( path.dirname( path.dirname( path.abspath( __file__ ) ) ) )))
+cred_file = '{}/{}'.format(cred_folder, config.get_main_option("credentials_file"))
+print("Reading credentials from : {}".format(cred_file))
+credentials = CredentialLoader( cred_file )
+driver = config.get_main_option("driver")
+dsn = credentials.make_dsn(driver)
+print(dsn)
+
+# Overwrite the url value from config (NB, the
+# url value in the config is non-functional
+config.set_main_option( 'sqlalchemy.url', dsn )
 
 
 def run_migrations_offline():
