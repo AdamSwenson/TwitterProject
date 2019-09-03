@@ -43,6 +43,8 @@ def upgrade():
     sa.Column('id', sa.String(length=225), nullable=True),
     sa.Column('location', sa.String(length=225), nullable=True),
     sa.Column('is_translation_enabled', sa.String(length=10), nullable=True),
+    # For csun enterprise only
+    # sa.Column('other_data', sa.Text(), nullable=True),
     sa.Column('other_data', sa.JSON(), nullable=True),
     sa.PrimaryKeyConstraint('userID')
     )
@@ -61,6 +63,8 @@ def upgrade():
     sa.Column('profile_background_tile', sa.String(length=100), nullable=True),
     sa.Column('is_translation_enabled', sa.String(length=100), nullable=True),
     sa.Column('profile_location', sa.String(length=100), nullable=True),
+    # For csun enterprise only
+    # sa.Column('other_data', sa.Text(), nullable=True),
     sa.Column('other_data', sa.JSON(), nullable=True),
     # sa.ForeignKeyConstraint(['userID'], ['users.userID'], ),
     sa.PrimaryKeyConstraint('tweetID')
