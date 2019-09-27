@@ -5,7 +5,6 @@ from Server.Queues.Queues import WordMapSaveQueue
 
 __author__ = 'adam'
 
-import tornado.web
 from progress.spinner import Spinner
 from tornado import gen
 
@@ -14,11 +13,12 @@ from CommonTools.Profiling.OptimizingTools import timestamp_writer, timestamped_
 # Loggers and instrumentation
 from CommonTools.Loggers.FileLoggers import FileWritingLogger
 from Server.ServerTools import Helpers
-from Server.ServerTools.ServerExceptions import DBExceptions, ShutdownCommanded
+from Server.ServerTools.ServerExceptions import DBExceptions
 
 from Server.RequestHandlers.HandlerParent import IRequestHandler
 
-class WordMapHandler( IRequestHandler):
+
+class WordMapHandler( IRequestHandler ):
     """Handles requests to save word mappings from user descriptions and tweets to the db """
 
     # Queue results at class level so that any instance
@@ -32,7 +32,7 @@ class WordMapHandler( IRequestHandler):
 
     spinner = Spinner( 'Loading ' )
 
-    logger = FileWritingLogger( ) #name='WordMapHandler' )
+    logger = FileWritingLogger()  # name='WordMapHandler' )
 
     def delete( self ):
         """closes all operations"""
