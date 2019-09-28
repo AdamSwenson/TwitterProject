@@ -94,9 +94,9 @@ class MySqlConnection( Connection ):
             server = "%s:%s" % (self._server, self._port)
         else:
             server = self._server
-            self._dsn = "mysql%s://%s:%s@%s/%s?charset=utf8mb4" % (self._driver, self._username, self._password, server, self._db_name)
-            print( self._dsn )
-            return self._dsn
+        self._dsn = "mysql%s://%s:%s@%s/%s?charset=utf8mb4" % (self._driver, self._username, self._password, server, self._db_name)
+        print( self._dsn )
+        return self._dsn
 
     def _make_engine( self ):
         self.make_dsn()

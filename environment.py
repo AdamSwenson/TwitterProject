@@ -31,11 +31,16 @@ LOG_FOLDER_PATH = "%s/Desktop/TwitterDataAnalysisLogs" % ROOT
 
 
 ######################## Configuration ############################
-# NB, for ipython, do this to inject config value
-# (on command line would've been --config=data-analysis)
-# import sys
-# sys.argv = ['data-analysis']
-# import environment
+""" 
+On command line:
+    python Folder/Executables/file.py --config=data-analysis
+
+NB, for ipython, do this to inject config value at top of notebook
+    import sys
+    sys.argv = ['data-analysis']
+    import environment
+"""
+
 print(sys.argv)
 import argparse
 parser = argparse.ArgumentParser()
@@ -52,6 +57,11 @@ parser.add_argument('--analysis',
 parser.add_argument('--testing',
                     help="Load the configuration for data analysis",
                     default="testing")
+
+parser.add_argument('--live',
+                    help="Load the configuration for connecting to the csun ent db",
+                    default="live-db")
+# These are just flags
 
 args = parser.parse_args()
 

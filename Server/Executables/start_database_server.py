@@ -49,7 +49,12 @@ def main():
     print( 'running database server main on port %s' % environment.DB_PORT )
     try:
         app = make_app()
-        sockets = tornado.netutil.bind_sockets( environment.DB_PORT )
+        try:
+            sockets = tornado.netutil.bind_sockets( environment.DB_PORT )
+        except OSError:
+            # In case I've left the port bound up with another process,
+            # try reconnecting through a new socket once
+            sockets = tornado.netutil.bind_sockets( environment.DB_PORT - 1)
         tornado.process.fork_processes( 0 )  # Forks multiple sub-processes
         server = tornado.httpserver.HTTPServer( app )
         server.add_sockets( sockets )
