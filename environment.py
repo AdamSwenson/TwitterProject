@@ -27,7 +27,7 @@ DB_FOLDER = "%s/Desktop/TwitterDataAnalysisLogs/dbs" % ROOT
 EXPERIMENTS_FOLDER = '%s/Experiments' % enclosing
 
 # Where to put log files
-LOG_FOLDER_PATH = "%s/Desktop/TwitterDataAnalysisLogs" % ROOT
+# LOG_FOLDER_PATH = "%s/Desktop/TwitterDataAnalysisLogs" % ROOT
 
 
 ######################## Configuration ############################
@@ -79,6 +79,7 @@ LIMIT = None if LIMIT == 'None' else int(LIMIT)
 #### Logging
 LOG_FOLDER_PATH = config['logging'].get('LOG_FOLDER_PATH')
 LOG_FOLDER_PATH = LOG_FOLDER_PATH.format(ROOT)
+print(LOG_FOLDER_PATH)
 INTEGRITY_LOGGING = config['logging'].getboolean('INTEGRITY_LOGGING')
 TIME_LOGGING = config['logging'].getboolean('TIME_LOGGING')
 SLACK_NOTIFY = config['logging'].getboolean('SLACK_NOTIFY')
