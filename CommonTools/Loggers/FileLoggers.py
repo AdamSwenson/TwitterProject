@@ -9,12 +9,13 @@ from logbook import FileHandler
 
 from CommonTools.Loggers.ILogger import ILogger
 
-BASE = os.getenv("HOME")
+import environment as env
+#BASE = os.getenv("HOME")
 # todo restore environment
 # from DataAnalysis.environment import *
 
 # Logging
-LOG_FOLDER_PATH = "%s/Desktop/TwitterDataAnalysisLogs" % BASE
+LOG_FOLDER_PATH = env.LOG_FOLDER_PATH # "%s/Desktop/TwitterDataAnalysisLogs" % BASE
 
 DEFAULT_LOG_FILE_NAME = 'twitter_log.txt'
 DEFAULT_LOG_FILE_PATH = "%s/%s" % (LOG_FOLDER_PATH, DEFAULT_LOG_FILE_NAME)
