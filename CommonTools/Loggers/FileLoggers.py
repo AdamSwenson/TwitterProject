@@ -10,15 +10,15 @@ from logbook import FileHandler
 from CommonTools.Loggers.ILogger import ILogger
 
 import environment as env
+
 #BASE = os.getenv("HOME")
-# todo restore environment
 # from DataAnalysis.environment import *
 
 # Logging
-LOG_FOLDER_PATH = env.LOG_FOLDER_PATH # "%s/Desktop/TwitterDataAnalysisLogs" % BASE
-
-DEFAULT_LOG_FILE_NAME = 'twitter_log.txt'
-DEFAULT_LOG_FILE_PATH = "%s/%s" % (LOG_FOLDER_PATH, DEFAULT_LOG_FILE_NAME)
+# LOG_FOLDER_PATH = env.LOG_FOLDER_PATH # "%s/Desktop/TwitterDataAnalysisLogs" % BASE
+#
+# DEFAULT_LOG_FILE_NAME = 'twitter_log.txt'
+# DEFAULT_LOG_FILE_PATH = "%s/%s" % (LOG_FOLDER_PATH, DEFAULT_LOG_FILE_NAME)
 
 
 class FileWritingLogger(ILogger):
@@ -30,7 +30,7 @@ class FileWritingLogger(ILogger):
         self._process_kwargs(kwargs)
 
         if hasattr(self, 'log_path') is False:
-            self.log_path = DEFAULT_LOG_FILE_PATH
+            self.log_path = env.DEFAULT_LOG_FILE_PATH
 
         print("%s Logging to: %s" % (self.name, self.log_path))
 

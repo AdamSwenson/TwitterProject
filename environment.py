@@ -9,10 +9,13 @@ import configparser
 
 ############################ Locations  ############################
 ROOT = os.getenv( "HOME" )
+
 # The folder containing environment.py
 PROJ_BASE = os.path.abspath(os.path.dirname(__file__))
 
-# Folders outside of the project foler
+# Folders outside of the project foler. This will usually
+# be the credentials folder, logs and other things which should
+# not be in version control
 enclosing = os.path.abspath(os.path.dirname(PROJ_BASE))
 
 # All login credentials are defined in files here.
@@ -84,9 +87,23 @@ INTEGRITY_LOGGING = config['logging'].getboolean('INTEGRITY_LOGGING')
 TIME_LOGGING = config['logging'].getboolean('TIME_LOGGING')
 SLACK_NOTIFY = config['logging'].getboolean('SLACK_NOTIFY')
 SLACK_HEARTBEAT_LIMIT = config['logging'].getint('SLACK_HEARTBEAT_LIMIT')
+# Log files
+DEFAULT_LOG_FILE_NAME = 'twitter_log.txt'
+DEFAULT_LOG_FILE_PATH = "%s/%s" % (LOG_FOLDER_PATH, DEFAULT_LOG_FILE_NAME)
+
+QUERY_LOG = '%s/QUERY_LOG.csv' % LOG_FOLDER_PATH
+QUERY_TIME_LOG = '%s/QUERY_TIME_LOG.csv' % LOG_FOLDER_PATH
+
+REQUEST_LOG = '%s/request_log.csv' % LOG_FOLDER_PATH
+REQUEST_TIME_LOG = '%s/request_time_log.csv' % LOG_FOLDER_PATH
+
+SEARCH_LOG = '{}/twitter_miner_log.txt'.format( LOG_FOLDER_PATH )
+
+
 #### Queues
 DB_QUEUE_SIZE = config['queues'].getint('DB_QUEUE_SIZE')
 CLIENT_QUEUE_SIZE = config['queues'].getint('CLIENT_QUEUE_SIZE')
+
 #### Database
 CREDENTIAL_FILE = '%s/%s' % (CREDENTIALS_FOLDER_PATH, config['database'].get('CREDENTIALS_FILE'))
 DB_PORT = config['database'].getint('DB_PORT')
