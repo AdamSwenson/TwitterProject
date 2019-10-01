@@ -82,7 +82,7 @@ LIMIT = None if LIMIT == 'None' else int(LIMIT)
 #### Logging
 LOG_FOLDER_PATH = config['logging'].get('LOG_FOLDER_PATH')
 LOG_FOLDER_PATH = LOG_FOLDER_PATH.format(ROOT)
-print(LOG_FOLDER_PATH)
+# print(LOG_FOLDER_PATH)
 INTEGRITY_LOGGING = config['logging'].getboolean('INTEGRITY_LOGGING')
 TIME_LOGGING = config['logging'].getboolean('TIME_LOGGING')
 SLACK_NOTIFY = config['logging'].getboolean('SLACK_NOTIFY')

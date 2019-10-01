@@ -1,12 +1,7 @@
 """
 Created by adam on 11/6/16
 """
-from DatabaseAccessObjects.EngineMakers import create_sqlite_engine
-
 __author__ = 'adam'
-
-from CommonTools.Credentialing.CredentialTools import CredentialLoader
-from CommonTools.Utilities.Decorators import deprecated
 
 # import MySQLdb
 import sqlalchemy
@@ -14,6 +9,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session
 
+from CommonTools.Credentialing.CredentialTools import CredentialLoader
+from CommonTools.Utilities.Decorators import deprecated
+from DatabaseAccessObjects.EngineMakers import create_sqlite_engine
 from environment import *
 
 # Base class that maintains the catalog of tables and classes in db
@@ -94,7 +92,8 @@ class MySqlConnection( Connection ):
             server = "%s:%s" % (self._server, self._port)
         else:
             server = self._server
-        self._dsn = "mysql%s://%s:%s@%s/%s?charset=utf8mb4" % (self._driver, self._username, self._password, server, self._db_name)
+        self._dsn = "mysql%s://%s:%s@%s/%s?charset=utf8mb4" % (
+        self._driver, self._username, self._password, server, self._db_name)
         print( self._dsn )
         return self._dsn
 
@@ -104,7 +103,7 @@ class MySqlConnection( Connection ):
             self._dsn,
             # encoding='utf8mb4',
             # connect_args={
-                # 'charset': 'utfmb4',
+            # 'charset': 'utfmb4',
             #     'collation': 'utfmb4_unicode_ci'
             # }
         )
