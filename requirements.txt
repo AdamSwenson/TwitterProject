@@ -20,7 +20,7 @@ cffi==1.11.5
 chardet==3.0.4
 configparser==3.5.0
 CourseZero==0.0.6
-cryptography==2.2.2
+cryptography==2.3
 cycler==0.10.0
 Cython==0.29.1
 DAWG==0.7.8
