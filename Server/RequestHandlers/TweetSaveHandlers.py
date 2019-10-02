@@ -7,19 +7,18 @@ __author__ = 'adam'
 
 import asyncio
 
+from CommonTools.Profiling.OptimizingTools import timestamp_writer
 from progress.spinner import Spinner
 from tornado import gen
 
 import environment
-from CommonTools.Profiling.OptimizingTools import timestamp_writer
+from Mining.SearchResultsProcessing.UserExtractionTools import extract_user_dict_from_tweet, add_audit_data_to_user
 # Loggers and instrumentation
-from Loggers.FileLoggers import FileWritingLogger
 from Server.Queues.OrmSaveQueue import OrmSaveQueue
 from Server.RequestHandlers.HandlerParent import IRequestHandler
 from Server.ServerTools import Helpers
 from Server.ServerTools.ServerExceptions import DBExceptions
 from TwitterDatabase.Models.TweetORM import TweetFactory, UserFactory
-from Mining.SearchResultsProcessing.UserExtractionTools import extract_user_dict_from_tweet, add_audit_data_to_user
 
 
 class TweetSaveHandler( IRequestHandler ):
@@ -41,7 +40,7 @@ class TweetSaveHandler( IRequestHandler ):
     def delete( self ):
         """closes all operations"""
         with self.make_session() as session:
-            type( self ).shutdown(session)
+            type( self ).shutdown( session )
 
     @gen.coroutine
     def get( self ):
@@ -68,7 +67,8 @@ class TweetSaveHandler( IRequestHandler ):
             # The payload is a list containing dictionaries
             tweets = [ TweetFactory( p ) for p in payload ]
             # now extract users from the tweet objects' other_data field
-            users = [add_audit_data_to_user(UserFactory(extract_user_dict_from_tweet( tweet )), tweet.tweetID) for tweet in tweets]
+            users = [ add_audit_data_to_user( UserFactory( extract_user_dict_from_tweet( tweet ) ), tweet.tweetID ) for
+                      tweet in tweets ]
             # add the users to the tweets list since the save handler in the queue
             # is agnostic on what kind of orm object it receives
             tweets += users
