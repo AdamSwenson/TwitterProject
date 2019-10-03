@@ -32,6 +32,32 @@ EXPERIMENTS_FOLDER = '%s/Experiments' % enclosing
 # Where to put log files
 # LOG_FOLDER_PATH = "%s/Desktop/TwitterDataAnalysisLogs" % ROOT
 
+############################## Locations of code ###############
+# Project folder paths
+ANALYSIS_PATH = "%s/DataAnalysis" % PROJ_BASE
+COMMON_TOOLS_PATH = "%s/CommonTools" % PROJ_BASE
+SERVER_PATH = "%s/TwitterDatabase" % PROJ_BASE
+TEXT_TOOLS_PATH = "%s/TextProcessingTools" % PROJ_BASE
+MINING_PATH = "%s/Mining" % PROJ_BASE
+UNIT_TESTS_PATH = "%s/tests" % PROJ_BASE
+
+# add everyone to path explicitly
+sys.path.append( PROJ_BASE )
+sys.path.append( ANALYSIS_PATH )
+sys.path.append(COMMON_TOOLS_PATH)
+sys.path.append(SERVER_PATH )
+sys.path.append( TEXT_TOOLS_PATH )
+sys.path.append( MINING_PATH )
+sys.path.append(UNIT_TESTS_PATH)
+
+
+#### Credentials
+SLACK_CREDENTIAL_FILE = "%s/slack-credentials.xml" % CREDENTIALS_FOLDER_PATH
+TWITTER_CREDENTIAL_FILE = "%s/twittercredentials2.xml" % CREDENTIALS_FOLDER_PATH
+
+#### Data and experiments
+MAPPING_PATH = "%s/DataAnalysis/mappings" % PROJ_BASE
+
 
 ######################## Configuration ############################
 """ 
@@ -73,23 +99,34 @@ print("Reading configuration from %s" % configFile)
 config = configparser.ConfigParser()
 config.read(configFile)
 
-#### Global control variables
+
+# Global control variables
 TEST = config['control'].getboolean('TEST')
 ITEM_TYPE = config['control'].get('ITEM_TYPE')
 LIMIT = config['control'].get('LIMIT')
 LIMIT = None if LIMIT == 'None' else int(LIMIT)
 
-#### Logging
+############################## Logging  ############################
+# Paths to log folder set from config
 LOG_FOLDER_PATH = config['logging'].get('LOG_FOLDER_PATH')
 LOG_FOLDER_PATH = LOG_FOLDER_PATH.format(ROOT)
 # print(LOG_FOLDER_PATH)
+
+# Logging settings
 INTEGRITY_LOGGING = config['logging'].getboolean('INTEGRITY_LOGGING')
 TIME_LOGGING = config['logging'].getboolean('TIME_LOGGING')
 SLACK_NOTIFY = config['logging'].getboolean('SLACK_NOTIFY')
 SLACK_HEARTBEAT_LIMIT = config['logging'].getint('SLACK_HEARTBEAT_LIMIT')
+
 # Log files
 DEFAULT_LOG_FILE_NAME = 'twitter_log.txt'
 DEFAULT_LOG_FILE_PATH = "%s/%s" % (LOG_FOLDER_PATH, DEFAULT_LOG_FILE_NAME)
+
+MINING_LOG_FOLDER_PATH = "{}/mining".format(LOG_FOLDER_PATH)
+MINING_STATS_LOG = "{}/twitter-mining-log.txt".format( MINING_LOG_FOLDER_PATH )
+MINING_TERMS_LOG = "{}/twitter-mining-terms-log.txt".format(MINING_LOG_FOLDER_PATH)
+SEARCH_LOG = MINING_STATS_LOG #'{}/twitter_miner_log.txt'.format( LOG_FOLDER_PATH )
+CSV_MINING_LOG_FILE_PATH = "%s/twitter-save-data.csv" % MINING_LOG_FOLDER_PATH
 
 QUERY_LOG = '%s/QUERY_LOG.csv' % LOG_FOLDER_PATH
 QUERY_TIME_LOG = '%s/QUERY_TIME_LOG.csv' % LOG_FOLDER_PATH
@@ -97,65 +134,6 @@ QUERY_TIME_LOG = '%s/QUERY_TIME_LOG.csv' % LOG_FOLDER_PATH
 REQUEST_LOG = '%s/request_log.csv' % LOG_FOLDER_PATH
 REQUEST_TIME_LOG = '%s/request_time_log.csv' % LOG_FOLDER_PATH
 
-SEARCH_LOG = '{}/twitter_miner_log.txt'.format( LOG_FOLDER_PATH )
-
-
-#### Queues
-DB_QUEUE_SIZE = config['queues'].getint('DB_QUEUE_SIZE')
-CLIENT_QUEUE_SIZE = config['queues'].getint('CLIENT_QUEUE_SIZE')
-
-#### Database
-CREDENTIAL_FILE = '%s/%s' % (CREDENTIALS_FOLDER_PATH, config['database'].get('CREDENTIALS_FILE'))
-DB_PORT = config['database'].getint('DB_PORT')
-DB_URL = "http://127.0.0.1:%s" % DB_PORT
-WHICH_SERVER = config['database'].get('WHICH_SERVER')
-ENGINE = config['database'].get('ENGINE')
-
-
-############################## Locations of code ###############
-# Project folder paths
-ANALYSIS_PATH = "%s/DataAnalysis" % PROJ_BASE
-COMMON_TOOLS_PATH = "%s/CommonTools" % PROJ_BASE
-SERVER_PATH = "%s/TwitterDatabase" % PROJ_BASE
-TEXT_TOOLS_PATH = "%s/TextProcessingTools" % PROJ_BASE
-MINING_PATH = "%s/Mining" % PROJ_BASE
-UNIT_TESTS_PATH = "%s/tests" % PROJ_BASE
-
-# add everyone to path explicitly
-sys.path.append( PROJ_BASE )
-sys.path.append( ANALYSIS_PATH )
-sys.path.append(COMMON_TOOLS_PATH)
-sys.path.append(SERVER_PATH )
-sys.path.append( TEXT_TOOLS_PATH )
-sys.path.append( MINING_PATH )
-sys.path.append(UNIT_TESTS_PATH)
-
-
-#### Credentials
-SLACK_CREDENTIAL_FILE = "%s/slack-credentials.xml" % CREDENTIALS_FOLDER_PATH
-TWITTER_CREDENTIAL_FILE = "%s/twittercredentials2.xml" % CREDENTIALS_FOLDER_PATH
-
-#### Data and experiments
-MAPPING_PATH = "%s/DataAnalysis/mappings" % PROJ_BASE
-
-#### DB files
-# sqlite db files
-# working folders
-SQLITE_FILE = '%s/wordmapping.db' % LOG_FOLDER_PATH
-SQLITE_FILE_CONNECTION_STRING = 'sqlite:////%s' % SQLITE_FILE
-# the working file things get compiled into
-MASTER_DB = '%s/master.db' % LOG_FOLDER_PATH
-
-#### Processed data files
-USER_DB_MASTER = '%s/user-databases/users-master.db' % DATA_FOLDER
-USER_DB_NO_STOP = '%s/user-databases/users-no-stop.db' % DATA_FOLDER
-TWEET_DB_MASTER = '%s/tweet-databases/tweets-master.db' % DATA_FOLDER
-TWEET_DB_NO_STOP= '%s/tweet-databases/tweets-no-stop.db' % DATA_FOLDER
-ID_MAP_DB = '%s/id-map.db' % DATA_FOLDER
-MAX_DB_FILES = 10  # the maximum number of db files to create.
-
-#### Logging
-# Logging folder paths
 PROFILING_LOG_FOLDER_PATH = "%s/profiling" % LOG_FOLDER_PATH
 INTEGRITY_LOG_FOLDER_PATH = "%s/integrity" % LOG_FOLDER_PATH
 
@@ -180,4 +158,32 @@ QUERY_TIME_LOG = '%s/QUERY_TIME_LOG.csv' % LOG_FOLDER_PATH
 # semi-permanent log of how long it takes to run user processing
 # this gets written to regardless of whether TIME_LOGGING is True
 RUN_TIME_LOG = '%s/%s-processing-run-time-log.csv' % (LOG_FOLDER_PATH, ITEM_TYPE)
+
+############################## Queues  ############################
+DB_QUEUE_SIZE = config['queues'].getint('DB_QUEUE_SIZE')
+CLIENT_QUEUE_SIZE = config['queues'].getint('CLIENT_QUEUE_SIZE')
+
+############################## Database  ############################
+CREDENTIAL_FILE = '%s/%s' % (CREDENTIALS_FOLDER_PATH, config['database'].get('CREDENTIALS_FILE'))
+DB_PORT = config['database'].getint('DB_PORT')
+DB_URL = "http://127.0.0.1:%s" % DB_PORT
+WHICH_SERVER = config['database'].get('WHICH_SERVER')
+ENGINE = config['database'].get('ENGINE')
+
+
+#### DB files
+# sqlite db files
+# working folders
+SQLITE_FILE = '%s/wordmapping.db' % LOG_FOLDER_PATH
+SQLITE_FILE_CONNECTION_STRING = 'sqlite:////%s' % SQLITE_FILE
+# the working file things get compiled into
+MASTER_DB = '%s/master.db' % LOG_FOLDER_PATH
+
+#### Processed data files
+USER_DB_MASTER = '%s/user-databases/users-master.db' % DATA_FOLDER
+USER_DB_NO_STOP = '%s/user-databases/users-no-stop.db' % DATA_FOLDER
+TWEET_DB_MASTER = '%s/tweet-databases/tweets-master.db' % DATA_FOLDER
+TWEET_DB_NO_STOP= '%s/tweet-databases/tweets-no-stop.db' % DATA_FOLDER
+ID_MAP_DB = '%s/id-map.db' % DATA_FOLDER
+MAX_DB_FILES = 10  # the maximum number of db files to create.
 

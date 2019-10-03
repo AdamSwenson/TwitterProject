@@ -4,8 +4,9 @@ Created by adam on 6/28/18
 __author__ = 'adam'
 
 from datetime import datetime
-
 from http.client import RemoteDisconnected
+
+from CommonTools.Loggers.SearchLoggers import SearchLogger
 from Mining.TwitterQueryMakers.QueriesBase import GetterBase
 
 
@@ -30,6 +31,9 @@ def make_query( terms ):
     return stem
 
 
+logger = SearchLogger()
+
+
 class TweetsGetter( GetterBase ):
 
     def __init__( self, credentials_file ):
@@ -47,14 +51,19 @@ class TweetsGetter( GetterBase ):
         results = [ ]
         for term in search_terms:
             try:
-                results += self.conn.GetSearch( term=term, max_id=beforeId, lang='en', since_id=afterId )
+                rs = self.conn.GetSearch( term=term, max_id=beforeId, lang='en', since_id=afterId )
+                # results += self.conn.GetSearch( term=term, max_id=beforeId, lang='en', since_id=afterId )
             except (ConnectionResetError, RemoteDisconnected) as cre:
                 # Handle the remote twitter server resetting the connection
                 print( "Connection error with remote connection to twitter. {} \n{}".format( datetime.now(), cre ) )
                 # Make a new connection and rerun the search
                 self.make_twitter_connection()
-                results += self.conn.GetSearch( term=term, max_id=beforeId, lang='en', since_id=afterId )
+                rs = self.conn.GetSearch( term=term, max_id=beforeId, lang='en', since_id=afterId )
+                # results += self.conn.GetSearch( term=term, max_id=beforeId, lang='en', since_id=afterId )
                 # If it fails this time, we won't catch the error
+
+            logger.number_of_results(term, len(rs))
+            results += rs
 
         # results = self.conn.GetSearch( raw_query=query, max_id=beforeId, lang='en', since_id=afterId )
         return [ r._json for r in results ]

@@ -4,14 +4,11 @@ Created by adam on 6/25/18
 __author__ = 'adam'
 
 import tornado.web
-from tornado import gen
+import tornado.web
 from tornado_sqlalchemy import SessionMixin
 
 # Loggers and instrumentation
 from Server.ServerTools.ServerExceptions import ShutdownCommanded
-
-from tornado_sqlalchemy import SessionMixin
-import tornado.web
 
 
 class IRequestHandler( tornado.web.RequestHandler, SessionMixin ):
@@ -27,7 +24,6 @@ class IRequestHandler( tornado.web.RequestHandler, SessionMixin ):
         # add to the stored request count.
         cls._requestCount += 1
 
-
     @property
     def queue_length( self ):
         return len( type( self ).q.store )
@@ -38,7 +34,7 @@ class IRequestHandler( tornado.web.RequestHandler, SessionMixin ):
         server operations. That involves flushing the
         queue and writing to requisite log files"""
         # flush the queue (for this handler instance!)
-        cls.q.save_queued(session)
+        cls.q.save_queued( session )
 
         message = "Shutdown called. \n # requests: %s \n # queries: %s" % (cls._requestCount, cls._queryCount)
         print( message )

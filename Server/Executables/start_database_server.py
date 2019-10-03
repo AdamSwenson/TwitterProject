@@ -27,7 +27,7 @@ def make_sqlalchemy_app():
     # We are just going to need the dsn
     conn = MySqlConnection(environment.CREDENTIAL_FILE,  create_engine=False )
     dsn = conn.make_dsn()
-    print(dsn)
+    # print(dsn)
     factory = make_session_factory( dsn )
     return tornado.web.Application( route_handlers, session_factory=factory )
 
@@ -49,12 +49,12 @@ def main():
     print( 'running database server main on port %s' % environment.DB_PORT )
     try:
         app = make_app()
-        try:
-            sockets = tornado.netutil.bind_sockets( environment.DB_PORT )
-        except OSError:
-            # In case I've left the port bound up with another process,
-            # try reconnecting through a new socket once
-            sockets = tornado.netutil.bind_sockets( environment.DB_PORT - 1)
+        # try:
+        sockets = tornado.netutil.bind_sockets( environment.DB_PORT )
+        # except OSError:
+        #     # In case I've left the port bound up with another process,
+        #     # try reconnecting through a new socket once
+        #     sockets = tornado.netutil.bind_sockets( environment.DB_PORT - 1)
         tornado.process.fork_processes( 0 )  # Forks multiple sub-processes
         server = tornado.httpserver.HTTPServer( app )
         server.add_sockets( sockets )
@@ -74,6 +74,9 @@ def main():
         # print("%s in queue after flush" % len(WordMapHandler.results))
         num = TweetSaveHandler._requestCount + WordMapHandler._requestCount + UserSaveHandler._requestCount
         print( "%s requests received" % num)
+
+    except Exception as e:
+        print(e)
 
     finally:
         # WordMapHandler.save_queued()

@@ -2,6 +2,7 @@
 Created by adam on 3/27/18
 """
 from Server.ServerTools.Mixins import ResponseStoreMixin
+
 __author__ = 'adam'
 
 from tornado import gen
@@ -16,8 +17,8 @@ from Server.ServerTools.Routes import DB_INFO_ROUTE
 from DataAnalysis.ProcessingTools.Mixins import ProcessIdHaver
 from Server.ServerTools import Helpers
 
+
 # instrumenting to determine if running async
-from Profiling.OptimizingTools import timestamp_writer, timestamped_count_writer
 
 
 class NoQueueTimeoutHTTPClient( SimpleAsyncHTTPClient ):
@@ -52,13 +53,20 @@ class Client( ProcessIdHaver, ResponseStoreMixin ):
         self.errorCount = 0
         self.successCount = 0
 
+        # Times in seconds; tornado default is 20
+        # if using csun ent, need longer
+        # see https://www.tornadoweb.org/en/stable/httpclient.html#request-objects
+        self.request_timeout = 120
+        self.connect_timeout = 120
+
         if not hasattr( self, 'http_client' ):
             type( self ).initialize_client()
 
     @gen.coroutine
     def get_max_tweet_id( self ):
         url = "%s%s" % (env.DB_URL, DB_INFO_ROUTE)
-        response = yield from self.http_client.fetch( url, method="GET")
+        print(url)
+        response = yield from self.http_client.fetch( url, method="GET", request_timeout=self.request_timeout, connect_timeout=self.connect_timeout )
         return response
 
     @gen.coroutine
@@ -67,39 +75,41 @@ class Client( ProcessIdHaver, ResponseStoreMixin ):
         self.sentCount += 1
         payload = Helpers.encode_payload( result )
         try:
-            response = yield from self.http_client.fetch( self.url, method="POST", body=payload )
+            response = yield from self.http_client.fetch( self.url, method="POST", body=payload, request_timeout=self.request_timeout, connect_timeout=self.connect_timeout  )
             return response
         except Exception as e:
-            print(e)
+            print( e )
 
     def send_flush_command( self, future=None, repeat=100 ):
         """Instructs the server to flush the queue of whichever
         handler receives it to the db. The signal thus needs to be
         sent several times to make sure all the handlers receive it
         """
-        print('requesting queue flush')
+        print( 'requesting queue flush' )
         for _ in range( 0, repeat ):
-            self.http_client.fetch( self.url, method="GET" )
+            self.http_client.fetch( self.url, method="GET", request_timeout=self.request_timeout, connect_timeout=self.connect_timeout  )
 
     async def async_send_flush_command( self, future=None, repeat=15 ):
         """Instructs the server to flush the queue of whichever
         handler receives it to the db. The signal thus needs to be
         sent several times to make sure all the handlers receive it
         """
-        print('requesting queue flush')
+        print( 'requesting queue flush' )
 
-        tasks = [ asyncio.ensure_future(self.http_client.fetch( self.url, method="GET" )) for _ in range( 0, repeat ) ]
-        for future in asyncio.as_completed(tasks):
+        tasks = [ asyncio.ensure_future( self.http_client.fetch( self.url, method="GET" ) ) for _ in
+                  range( 0, repeat ) ]
+        for future in asyncio.as_completed( tasks ):
             data = await future
 
     def send_shutdown_command( self, future=None ):
         """Instructs the server to shut down"""
         self.http_client.fetch( self.url, method="DELETE" )
         if future is not None and not future.done():
-            future.set_result('shutdown complete')
+            future.set_result( 'shutdown complete' )
 
     def close( self ):
         self.http_client.close()
+
 
 #
 # # __slots__ = ['batch', 'batch_size', 'save', 'flush']

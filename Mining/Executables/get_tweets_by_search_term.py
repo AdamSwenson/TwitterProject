@@ -44,7 +44,7 @@ async def run():
     notice_count = 0
 
     # Set up the machinery for saving the
-    # processed results
+    # processed results to our database
     url = "%s%s" % (env.DB_URL, TWEET_ROUTE)
     c = Client( url )
     print( "Sending results to %s " % url )
@@ -59,6 +59,8 @@ async def run():
         maxId = r[ 'max_tweet_id' ]
     except AttributeError:
         maxId = None
+    except Exception as e:
+        print(e)
 
     # load ids to retrieve from file
     searchTerms = CsvFileTools.read_list( search_terms_file )

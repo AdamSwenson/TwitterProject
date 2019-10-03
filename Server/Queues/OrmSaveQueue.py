@@ -13,13 +13,16 @@ from CommonTools.FileTools.CsvFileTools import write_csv
 from Profiling.OptimizingTools import standard_timestamp
 from TwitterDatabase.Models.TweetORM import Tweet, User
 from TwitterDatabase.Repositories.NewOrmRepositories import update_tweet_if_changed
+
 lock = locks.Lock()
 
 import environment
 
-logpath = "%s/mining/twitter-utf-fuckup.txt" % environment.LOG_FOLDER_PATH
-csvlog = "%s/mining/twitter-save-data.csv" % environment.LOG_FOLDER_PATH
-Logger = FileWritingLogger( log_path=logpath, name='OrmSaveQueue' )
+# logpath = "%s/mining/twitter-utf-fuckup.txt" % environment.LOG_FOLDER_PATH
+# "%s/mining/twitter-save-data.csv" % environment.LOG_FOLDER_PATH
+
+csvlog = environment.CSV_MINING_LOG_FILE_PATH
+Logger = FileWritingLogger( log_path=environment.MINING_STATS_LOG, name='OrmSaveQueue' )
 
 
 class OrmSaveQueue:
@@ -90,7 +93,7 @@ class OrmSaveQueue:
                     # first, we get rid of the attempted save
                     session.rollback()
                     # now try updating
-                    self.update_handler(o, session)
+                    self.update_handler( o, session )
                 except sqlalchemy.exc.DatabaseError as e:
                     # print('db error %s' % e)
                     self._invalidCount += 1
@@ -102,9 +105,11 @@ class OrmSaveQueue:
             self.record_stats()
 
     def record_stats( self ):
+        """Writes information about the queries carried out to log files"""
         save_rate = self._saveCount / self._saveAttemptCount
 
-        r = [ standard_timestamp(), self._saveAttemptCount, self._saveCount, save_rate, self._invalidCount, self._updatedCount, self._usersUpdatedCount ]
+        r = [ standard_timestamp(), self._saveAttemptCount, self._saveCount, save_rate, self._invalidCount,
+              self._updatedCount, self._usersUpdatedCount ]
         write_csv( csvlog, r )
 
         Logger.log( " ------------ ---------------- ------------ " )
@@ -123,26 +128,25 @@ class OrmSaveQueue:
         self._updatedCount = 0
         self._usersUpdatedCount = 0
 
-    def update_handler( self, ormObject , session):
+    def update_handler( self, ormObject, session ):
         """This is called when there has been an integrity error,
         which indicates that the object already exists. It determines
         what sort of object we're dealing with and dispatches the appropriate
         task to update it
         """
         # Determine what we're dealing with
-        if isinstance(ormObject, Tweet):
-            if update_tweet_if_changed(ormObject, session):
+        if isinstance( ormObject, Tweet ):
+            if update_tweet_if_changed( ormObject, session ):
                 self._updatedCount += 1
                 # print("updated %s" % self._updatedCount)
 
-        elif isinstance(ormObject, User):
+        elif isinstance( ormObject, User ):
             # This is just what the handler for tweets does.
             # Was more ambitious under TWIT-38, but not sure need
             # all the extra apparatus
-            session.merge(ormObject)
+            session.merge( ormObject )
             session.commit()
             self._usersUpdatedCount += 1
-
 
         # except Exception as e:
 

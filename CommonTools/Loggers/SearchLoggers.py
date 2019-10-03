@@ -38,7 +38,7 @@ class SearchLogger( LogWriter ):
     Handles logging and printing information about search
     """
 
-    def __init__( self, log_file=env.SEARCH_LOG ):
+    def __init__( self, log_file=env.MINING_TERMS_LOG ):
         self.log = ''
         LogWriter.__init__( self )
         self.log_file = log_file
