@@ -1,6 +1,6 @@
 afinn==0.1
 aiodns==1.1.1
-aiohttp==3.4.4
+aiohttp==3.7.4
 aiounittest==1.1.0
 alembic==1.0.5
 appnope==0.1.0
